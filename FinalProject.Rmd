@@ -58,6 +58,34 @@ for (i in 1:length(movies$released)){
 
 movies <- cbind(movies,month)
 movies$month <- as.factor(movies$month)
-
 ```
+
+```{r}
+# remove variable we will not be using
+drops <- c("released","director","writer","star","company")
+movies <- movies[, !(names(movies) %in% drops)]
+```
+
+```{r}
+#reorganize columns
+organized <- c("name","rating","runtime","genre", "country", "month", "year", "votes", "score", "budget","gross")
+movies <- movies[,organized]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
