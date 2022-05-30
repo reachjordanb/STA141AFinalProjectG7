@@ -82,7 +82,11 @@ cor(movies_num)
 ```
 
 ```{r}
-# correlation test for score and number of votes
+# Responding to Q1
+ggpairs(movies[c("score", "votes")])
+# From chart we see that the correlation is extremely significant. 
+var(movies$votes)
+# From above note extremely high variability
 ```
 
 ```{r, echo = FALSE}
