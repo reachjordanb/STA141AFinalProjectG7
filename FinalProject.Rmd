@@ -77,7 +77,7 @@ movies <- movies[,organized]
 
 ```{r}
 return_prop <-  movies$gross / movies$budget
-movies <- cbind(movies, returnProf)
+movies <- cbind(movies, return_prop)
 ```
 
 
