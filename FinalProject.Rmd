@@ -76,6 +76,12 @@ for (i in 1:nrow(movies)){
   if(movies$rating[i] == "")
     movies$rating[i] <- "R"
 }
+
+# Combine "Unrated" to "Not Rated" -> "Unrated"
+for (i in 1:nrow(movies)){
+  if(movies$rating[i] == "Not Rated")
+    movies$rating[i] <- "Unrated"
+}
 ```
 
 ```{r, echo = FALSE}
