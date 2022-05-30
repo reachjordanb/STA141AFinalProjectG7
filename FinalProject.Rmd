@@ -64,7 +64,7 @@ movies <- movies[-c(8,9,10,11,14)]
 rownames(movies) <- 1:nrow(movies)
   
 # Reorganize columns
-organized <- c("name","rating","runtime","genre", "month", "year", "votes", "score", "budget", "gross")
+organized <- c("name", "rating", "runtime", "genre", "month", "year", "votes", "score", "budget", "gross")
 movies <- movies[, organized]
 
 return_prop <-  movies$gross / movies$budget
