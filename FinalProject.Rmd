@@ -4,4 +4,60 @@ author: "Riley Adams, Jordan Bowman, Tracy Yu, Constanza Widel, Ruqayyah Siddiqu
 date: "5/29/2022"
 output: html_document
 ---
+```{r}
+#libraries
+library(dplyr)
+```
+
+
+```{r}
+# Import data
+movies_original <- read.csv("movies.csv")
+dim(movies_original)
+```
+
+```{r}
+#remove rows containing NA
+movies <- movies_original %>% na.omit()
+dim(movies)
+rownames(movies) <- 1:nrow(movies)
+```
+
+```{r}
+# create "month" using "released"
+# a factor 1:12, indicating month of release
+month <- numeric()
+
+for (i in 1:length(movies$released)){
+  if (grepl("January", movies$released[i])){
+    month[i] <- 1
+  }else if (grepl("February", movies$released[i])){
+    month[i] <- 2
+  }else if (grepl("March", movies$released[i])){
+    month[i] <- 3
+  }else if (grepl("April", movies$released[i])){
+    month[i] <- 4
+  }else if (grepl("May", movies$released[i])){
+    month[i] <- 5
+  }else if (grepl("June", movies$released[i])){
+    month[i] <- 6
+  }else if (grepl("July", movies$released[i])){
+    month[i] <- 7
+  }else if (grepl("August", movies$released[i])){
+    month[i] <- 8
+  }else if (grepl("September", movies$released[i])){
+    month[i] <- 9
+  }else if (grepl("October", movies$released[i])){
+    month[i] <- 10
+  }else if (grepl("November", movies$released[i])){
+    month[i] <- 11
+  }else{
+    month[i] <- 12
+  }
+}
+
+movies <- cbind(movies,month)
+movies$month <- as.factor(movies$month)
+
+```
 
