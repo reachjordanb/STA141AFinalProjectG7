@@ -73,13 +73,20 @@ movies <- cbind(movies, return_prop)
 
 ```{r, echo = FALSE}
 ggpairs(movies[,-1])
+```
+
+```{r, echo = FALSE}
 movies_num <- movies[unlist(lapply(movies, is.numeric))]
-movies_num <- movies_num[-c(2)]
+movies_num <- movies_num[-2]
 cor(movies_num)
 ```
 
 ```{r}
-lm_num <- lm(score ~ ., data = movies_num)
+# correlation test for score and number of votes
+```
+
+```{r, echo = FALSE}
+lm_num <- lm(score ~ ., data = movies[-1])
 summary(lm_num)
 vif(lm_num)
 ```
