@@ -60,7 +60,8 @@ movies$month <- as.factor(movies$month)
 # sum(movies$country == "United States")/dim(movies)[1]
 movies <- movies[movies$country == "United States",]
 movies <- movies[-c(8,9,10,11,14)]
-
+rownames(movies) <- 1:nrow(movies)
+  
 # Reorganize columns
 organized <- c("name","rating","runtime","genre", "month", "year", "votes", "score", "budget", "gross")
 movies <- movies[, organized]
