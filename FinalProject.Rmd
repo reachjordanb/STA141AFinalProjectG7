@@ -6,10 +6,11 @@ output: html_document
 ---
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 # Libraries
-library(dplyr)
+require(dplyr)
 require(ggplot2)
 require(GGally)
 require(lmtest)
+require(car)
 ```
 
 
@@ -74,11 +75,14 @@ movies <- cbind(movies, return_prop)
 ggpairs(movies[,-1])
 movies_num <- movies[unlist(lapply(movies, is.numeric))]
 movies_num <- movies_num[-c(2)]
+cor(movies_num)
 ```
 
-
-
-
+```{r}
+lm_num <- lm(score ~ ., data = movies_num)
+summary(lm_num)
+vif(lm_num)
+```
 
 
 
