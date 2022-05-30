@@ -21,7 +21,7 @@ dim(movies_original)
 
 ```{r}
 # Remove rows containing NA
-movies <- movies_original[rowSums(is.na(movies)) == 0,]
+movies <- movies_original[rowSums(is.na(movies_original)) == 0,]
 ```
 
 ```{r}
