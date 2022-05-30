@@ -1,0 +1,7 @@
+---
+title: "Movie Industry Analysis"
+author: "Riley Adams, Jordan Bowman, Tracy Yu, Constanza Widel, Ruqayyah Siddique"
+date: "5/29/2022"
+output: html_document
+---
+
