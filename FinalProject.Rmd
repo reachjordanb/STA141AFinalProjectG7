@@ -21,7 +21,7 @@ dim(movies_original)
 
 ```{r}
 # Remove rows containing NA
-movies <- movies[rowSums(is.na(movies)) == 0,]
+movies <- movies_original[rowSums(is.na(movies)) == 0,]
 ```
 
 ```{r}
@@ -70,10 +70,15 @@ movies <- movies[-c(8,9,10,11,14)]
 ```
 
 ```{r}
-
+#reorganize columns
+organized <- c("name","rating","runtime","genre", "month", "year", "votes", "score", "budget","gross")
+movies <- movies[,organized]
 ```
 
-
+```{r}
+returnProf <-  movies$gross / movies$budget
+movies <- cbind(movies, returnProf)
+```
 
 
 
