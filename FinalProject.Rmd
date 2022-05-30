@@ -5,8 +5,11 @@ date: "5/29/2022"
 output: html_document
 ---
 ```{r}
-#libraries
+# Libraries
 library(dplyr)
+require(ggplot2)
+require(GGally)
+require(lmtest)
 ```
 
 
@@ -17,15 +20,13 @@ dim(movies_original)
 ```
 
 ```{r}
-#remove rows containing NA
-movies <- movies_original %>% na.omit()
-dim(movies)
-rownames(movies) <- 1:nrow(movies)
+# Remove rows containing NA
+movies <- movies[rowSums(is.na(movies)) == 0,]
 ```
 
 ```{r}
-# create "month" using "released"
-# a factor 1:12, indicating month of release
+# Create "month" using "released"
+# A factor 1:12, indicating month of release
 month <- numeric()
 
 for (i in 1:length(movies$released)){
@@ -56,20 +57,20 @@ for (i in 1:length(movies$released)){
   }
 }
 
-movies <- cbind(movies,month)
+movies <- cbind(movies, month)
 movies$month <- as.factor(movies$month)
 ```
 
 ```{r}
-# remove variables we will not be using
-drops <- c("released","director","writer","star","company")
-movies <- movies[, !(names(movies) %in% drops)]
+# Here we can see almost 80% of the movies are from the US
+# Considering IMDb is a US-based database, isolate to the US only
+sum(movies$country == "United States")/dim(movies)[1]
+movies <- movies[movies$country == "United States",]
+movies <- movies[-c(8,9,10,11,14)]
 ```
 
 ```{r}
-#reorganize columns
-organized <- c("name","rating","runtime","genre", "country", "month", "year", "votes", "score", "budget","gross")
-movies <- movies[,organized]
+
 ```
 
 
