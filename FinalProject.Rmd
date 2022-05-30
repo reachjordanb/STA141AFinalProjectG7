@@ -4,7 +4,7 @@ author: "Riley Adams, Jordan Bowman, Tracy Yu, Constanza Widel, Ruqayyah Siddiqu
 date: "5/29/2022"
 output: html_document
 ---
-```{r}
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
 # Libraries
 library(dplyr)
 require(ggplot2)
@@ -13,13 +13,10 @@ require(lmtest)
 ```
 
 
-```{r, echo = FALSE, warning = FALSE, message = FALSE}
-# Import data
+```{r, echo = FALSE}
 movies_original <- read.csv("movies.csv")
 dim(movies_original)
-```
 
-```{r, echo = FALSE}
 # Remove rows containing NA
 movies <- movies_original[rowSums(is.na(movies_original)) == 0,]
 
@@ -60,7 +57,7 @@ movies$month <- as.factor(movies$month)
 
 # Here we can see almost 80% of the movies are from the US
 # Considering IMDb is a US-based database, isolate to the US only
-sum(movies$country == "United States")/dim(movies)[1]
+# sum(movies$country == "United States")/dim(movies)[1]
 movies <- movies[movies$country == "United States",]
 movies <- movies[-c(8,9,10,11,14)]
 
@@ -70,6 +67,10 @@ movies <- movies[,organized]
 
 return_prop <-  movies$gross / movies$budget
 movies <- cbind(movies, return_prop)
+```
+
+```{r, echo = FALSE}
+ggpairs(movies[,-1])
 ```
 
 
