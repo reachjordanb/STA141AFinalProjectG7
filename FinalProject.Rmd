@@ -61,7 +61,7 @@ movies$month <- as.factor(movies$month)
 ```
 
 ```{r}
-# remove variable we will not be using
+# remove variables we will not be using
 drops <- c("released","director","writer","star","company")
 movies <- movies[, !(names(movies) %in% drops)]
 ```
