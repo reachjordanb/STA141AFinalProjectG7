@@ -67,8 +67,21 @@ rownames(movies) <- 1:nrow(movies)
 organized <- c("name", "rating", "runtime", "genre", "month", "year", "votes", "score", "budget", "gross")
 movies <- movies[, organized]
 
+# Create variable for gross/budget
 return_prop <-  movies$gross / movies$budget
 movies <- cbind(movies, return_prop)
+
+# All movies with blank rating were rated R
+for (i in 1:nrow(movies)){
+  if(movies$rating[i] == "")
+    movies$rating[i] <- "R"
+}
+
+# Combine "Unrated" to "Not Rated" -> "Unrated"
+for (i in 1:nrow(movies)){
+  if(movies$rating[i] == "Not Rated")
+    movies$rating[i] <- "Unrated"
+}
 ```
 
 ```{r, echo = FALSE}
