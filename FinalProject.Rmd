@@ -13,7 +13,6 @@ require(lmtest)
 require(car)
 ```
 
-
 ```{r, echo = FALSE}
 movies_original <- read.csv("movies.csv")
 dim(movies_original)
@@ -86,6 +85,10 @@ for (i in 1:nrow(movies)){
 
 ```{r, echo = FALSE}
 ggpairs(movies[,-1])
+
+hist(movies$budget) #cut at bin before 1.0e+08
+# run average release year, check overall distribution of year
+# check average score between two groups
 ```
 
 ```{r, echo = FALSE}
@@ -100,10 +103,13 @@ ggpairs(movies[c("score", "votes")])
 # From chart we see that the correlation is extremely significant. 
 var(movies$votes)
 # From above note extremely high variability
+densityPlot(log(movies$votes))
+
+ggpairs(data.frame(movies$score, log(movies$votes)))
 ```
 
 ```{r, echo = FALSE}
-lm_num <- lm(score ~ ., data = movies[-1])
+lm_num <- lm(score ~ ., data = movies_num)
 summary(lm_num)
 vif(lm_num)
 ```
