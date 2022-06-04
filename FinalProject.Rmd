@@ -59,7 +59,10 @@ movies$month <- as.factor(movies$month)
 # Considering IMDb is a US-based database, isolate to the US only
 # sum(movies$country == "United States")/dim(movies)[1]
 movies <- movies[movies$country == "United States",]
-movies <- movies[-c(8,9,10,11,14)]
+
+# remove variable we will not be using
+drops <- c("released","director","writer","star","company")
+movies <- movies[, !(names(movies) %in% drops)]
 rownames(movies) <- 1:nrow(movies)
   
 # Reorganize columns
