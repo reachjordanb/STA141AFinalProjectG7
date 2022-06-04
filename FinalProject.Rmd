@@ -129,11 +129,17 @@ summary(lm_num)
 vif(lm_num)
 ```
 
+```{r}
+model1 <- lm(formula = score ~ rating + runtime + genre + month + year + votes + budget + gross + return_prop , data = movies)
+summary(model1)
+```
 
+While some levels of the variable categorical *genre* are deemed significant predictors of *score* (e.g. *drama*, *animation*), the majority have very high p-values and are not deemed significant predictors (e.g. *thriller*, *mystery*). *Month* is not a significant predictor, nor *gross*, nor *return_prop*.
 
-
-
-
+```{r}
+model2 <- lm(formula = score ~ rating + runtime + year + votes + budget , data = movies)
+summary(model2)
+```
 
 
 
