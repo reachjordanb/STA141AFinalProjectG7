@@ -13,6 +13,7 @@ require(lmtest)
 require(car)
 require(leaps)
 require(MASS)
+require(cluster)
 ```
 
 ```{r, echo = FALSE}
