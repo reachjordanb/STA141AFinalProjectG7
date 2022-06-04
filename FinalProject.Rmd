@@ -12,6 +12,7 @@ require(GGally)
 require(lmtest)
 require(car)
 require(leaps)
+require(MASS)
 ```
 
 ```{r, echo = FALSE}
@@ -103,9 +104,23 @@ for(i in 1:nrow(movies)){
   }
 }
 movies <- cbind(movies, budget_cat)
+movies$budget_cat <- as.factor(budget_cat)
+#calculate percentage of movies with high budget
+(159+78+65+67+44+40+9+7+9+3+2+1+1+1)/nrow(movies)
 # run average release year, check overall distribution of year
-# check average score between two groups
+mean(movies$year[movies$budget_cat == "low"])
+mean(movies$year[movies$budget_cat == "high"])
+# check average score between two groups (high budget/low budget)
+mean(movies$score[movies$budget_cat == "low"])
+mean(movies$score[movies$budget_cat == "high"])
+
 ```
+
+Here we examine *budget* as a factor broken into two levels, based on the distribution of the histogram. Movies with a budget greater than \$80,000,000 are categorized as "high" budget while those with a budget less than or equal to \$80,000,000 are categorized as "low" budget. These two levels are stored as a factor *budget_cat*. 
+
+The mean year of high budget movies is $2000.333$, while the mean score of high budget movies is $6.302996$. 
+
+For low budget movies, the mean year is $2009.117$, while the mean score of low budget movies is $6.579835$.
 
 ```{r, echo = FALSE}
 movies_num <- movies[unlist(lapply(movies, is.numeric))]
@@ -175,6 +190,51 @@ summary(model2)
 # residual analysis
 plot(model2)
 ```
+
+Diagnosis:
+
+Residuals vs Fitted: non-linearity, heteroskedasticity
+
+QQ-Plot: non-normality
+
+scale-location: possible outliers 
+
+Residuals vs Leverage: high leverage points (1148, 2889,1147)
+
+Remedy:
+
+Will begin by attempting boxcox transformation to address nonlinearity and nonconstant variance in residuals.
+
+```{r}
+# ~~~~ BoxCox Transformation ~~~~~~
+# Boxcox for model2
+boxcox(model2)
+```
+
+Since the boxcox plot has its maximum value near $\lambda = 2$, we raise $\hat{score}$ to the 2nd power. We fit the new model (model3) as such:
+
+$\hat{score} = \sqrt{\hat\beta_0 + \hat\beta_{\text{runtime}} \cdot \text{runtime} + \hat\beta_{\text{votes}} \cdot \text{votes} + \hat\beta_{\text{budget}} \cdot \text{budget}}$
+
+```{r}
+# ~~~~~ MODEL 3 ~~~~~~~~~
+# square outcome variable (score)
+score_sq <- (movies$score)^2
+# fit model and summary output
+model3 <- lm(formula = score_sq ~ runtime + votes + budget, data = movies)
+summary(model3)
+```
+
+All predictors from model2 are still significant. Adjusted R-squared has increase by $0.3945 - 0.3372 = 0.0573$.
+
+
+
+
+
+
+
+
+
+
 
 
 
