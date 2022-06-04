@@ -136,9 +136,17 @@ summary(model1)
 
 While some levels of the variable categorical *genre* are deemed significant predictors of *score* (e.g. *drama*, *animation*), the majority have very high p-values and are not deemed significant predictors (e.g. *thriller*, *mystery*). *Month* is not a significant predictor, nor *gross*, nor *return_prop*.
 
+
+```{r}
+plot(model1)
+```
+
+From the Residuals vs Fitted plot, the residuals are not linear and exhibit heteroskedasticity. The QQ plot suggests that the residuals are not normally distributed as the lower and higher standardized residuals do not line up with the theoretical quantiles. We do have some outliers as well as one particularly high leverage point observations 2817 (The 2007 movie "Paranormal Activity").
+
 ```{r}
 model2 <- lm(formula = score ~ rating + runtime + year + votes + budget , data = movies)
 summary(model2)
+plot(model2)
 ```
 
 
