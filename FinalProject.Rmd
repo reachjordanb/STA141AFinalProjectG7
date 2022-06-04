@@ -11,6 +11,7 @@ require(ggplot2)
 require(GGally)
 require(lmtest)
 require(car)
+require(leaps)
 ```
 
 ```{r, echo = FALSE}
@@ -130,6 +131,8 @@ vif(lm_num)
 ```
 
 ```{r}
+# ~~~~~ MODEL 1 ~~~~~~~~~
+# fit model and summary output
 model1 <- lm(formula = score ~ rating + runtime + genre + month + year + votes + budget + gross + return_prop , data = movies)
 summary(model1)
 ```
@@ -138,15 +141,34 @@ While some levels of the variable categorical *genre* are deemed significant pre
 
 
 ```{r}
+# residual analysis
 plot(model1)
 ```
 
 From the Residuals vs Fitted plot, the residuals are not linear and exhibit heteroskedasticity. The QQ plot suggests that the residuals are not normally distributed as the lower and higher standardized residuals do not line up with the theoretical quantiles. We do have some outliers as well as one particularly high leverage point observations 2817 (The 2007 movie "Paranormal Activity").
 
 ```{r}
-model2 <- lm(formula = score ~ rating + runtime + year + votes + budget , data = movies)
+# Model Selection
+
+## Forward selection 
+model1_forward <- regsubsets(score ~ rating + runtime + genre + month + year + votes + budget + gross + return_prop, 
+                           data = movies, method = "forward")
+cbind(summary(model1_forward)$which, "adjusted r^2" = summary(model1_forward)$adjr2)
+
+## Backward selection 
+model1_backward <- regsubsets(score ~ rating + runtime + genre + month + year + votes + budget + gross + return_prop, 
+                           data = movies, method = "backward")
+cbind(summary(model1_backward)$which, "adjusted r^2" = summary(model1_backward)$adjr2)
+```
+
+Using a step-wise model selection procedure with $R^2_{adj}$ as a selection criterion, we will choose a model which produces the maximum value for $R^2_{adj}$. This method will implement partial F-tests and then one-by-one eliminate the least significant predictor. In this case, per both backward and forward elimination, the suggested model is score ~ ratingR, runtime, genreAnimation, genreBiography, genreDrama, genreHorror, votes, budget.
+
+Since only 1 of 8 levels for *rating* is deemed significant, and only 4 of 15 levels for *genre* is deemed significant. We will drop these predictors along with *return_prop*, *gross*, *year*, and *month* from the model and analyze the model again.
+```{r}
+# ~~~~~ MODEL 2 ~~~~~~~~~
+# fit model and summary output
+model2 <- lm(formula = score ~ runtime + votes + budget, data = movies)
 summary(model2)
-plot(model2)
 ```
 
 
