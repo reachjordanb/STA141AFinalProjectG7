@@ -226,16 +226,98 @@ summary(model3)
 
 All predictors from model2 are still significant. Adjusted R-squared has increase by $0.3945 - 0.3372 = 0.0573$.
 
+```{r}
+# residual analysis
+plot(model3)
+```
 
+The transformation has only marginally improved the residual plots. The same issues remain. We can try removing the high leverage points from the model. (Observations 1148,2889,1147).
 
+```{r}
+# ~~~~~ MODEL 4 ~~~~~~~~~
 
+# create vector containing highest leverage points.
+# (Pulp Fiction, The Dark Knight, The Shawshank Redemption)
+highlev <- c(1148,2889,1147)
+movies[highlev,]
 
+# new dataframe without high leverage points
+movies_lowlev <- movies[-highlev,]
+rownames(movies_lowlev) <- 1:nrow(movies_lowlev)
 
+# have to remove same values in score_sq
+score_sq_ll <- score_sq[-highlev]
 
+# fit model and summary output
+model4 <- lm(formula = score_sq_ll ~ runtime + votes + budget, data = movies_lowlev)
+summary(model4)
+```
 
+All predictors still significant. Adjusted R-squared improved by $0.3968 - 0.3945 = 0.0023$.
 
+```{r}
+# residual analysis
+plot(model4)
+```
 
+```{r}
+# high leverage
+hl_2 <- c(1741,1147,3149)
+movies_lowlev[hl_2,]
+# seems like the movies that keep throwing off the model are those that are "big hits" or "classics"
+```
 
+Seems like the movies that keep throwing off the model are those that are "big hits" or "classics". Will, again, remove these observations.
+
+```{r}
+# ~~~~~ MODEL 5 ~~~~~~~~~
+
+# new dataframe without high leverage points
+movies_lowlev2 <- movies_lowlev[-hl_2,]
+rownames(movies_lowlev2) <- 1:nrow(movies_lowlev2)
+
+# have to remove same values in score_sq_ll
+score_sq_ll2 <- score_sq_ll[-hl_2]
+
+# fit model and summary output
+model5 <- lm(formula = score_sq_ll2 ~ runtime + votes + budget, data = movies_lowlev2)
+summary(model5)
+```
+
+All predictors still significant. Adjusted R-squared improved by $0.3984 - 0.3968 = 0.0016$.
+
+```{r}
+# residual analysis
+plot(model5)
+```
+
+```{r}
+# high leverage
+hl_3 <- c(3409,3668,1256)
+movies_lowlev2[hl_3,]
+
+boxcox(model5)
+```
+
+More of those well-loved, classic movies throwing off the model. Maybe movie magic does exist. Our model may work for those movies that don't have the "magic". Residuals are getting better. Want to try transforming one more time, box cox suggests raising to the second power again.
+
+```{r}
+# ~~~~~ MODEL 6 ~~~~~~~~~
+score_4th <- (score_sq_ll2)^2
+
+# fit model and summary output
+model6 <- lm(formula = score_4th ~ runtime + votes + budget, data = movies_lowlev2)
+summary(model6)
+```
+
+Adjusted R-squared increased by $0.4844 - 0.3984 = 0.086$
+
+```{r}
+# residual analysis
+plot(model6)
+```
+
+Residuals are looking way better. Linearity improved, not quite there but *much* closer. Homoskedasticity appears more likely. Residual Quantiles are quite close to theoretical quantiles, could pass for normality.
 
 
 
