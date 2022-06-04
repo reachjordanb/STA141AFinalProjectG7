@@ -88,8 +88,20 @@ for (i in 1:nrow(movies)){
 
 ```{r, echo = FALSE}
 ggpairs(movies[,-1])
-
-hist(movies$budget) #cut at bin before 1.0e+08
+```
+```{r, echo=FALSE}
+hist(movies$budget, labels = TRUE,breaks = 18)
+#cut at bin before 1.0e+08
+mov_hist <- hist(movies$budget, labels = TRUE,breaks = 18)
+budget_cat <- character()
+for(i in 1:nrow(movies)){
+  if (movies$budget[i] > mov_hist$breaks[5]){
+    budget_cat[i] <- "high"
+  }else{
+    budget_cat[i] <- "low"
+  }
+}
+movies <- cbind(movies, budget_cat)
 # run average release year, check overall distribution of year
 # check average score between two groups
 ```
