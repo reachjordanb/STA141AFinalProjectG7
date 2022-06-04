@@ -1,7 +1,7 @@
 ---
 title: "Movie Industry Analysis"
 author: "Riley Adams, Jordan Bowman, Tracy Yu, Constanza Widel, Ruqayyah Siddique"
-date: "5/29/2022"
+date: "6/6/2022"
 output: html_document
 ---
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
@@ -88,10 +88,11 @@ for (i in 1:nrow(movies)){
 }
 ```
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, message = FALSE}
 ggpairs(movies[,-1])
 ```
-```{r, echo=FALSE}
+
+```{r, echo = FALSE}
 hist(movies$budget, labels = TRUE,breaks = 18)
 #cut at bin before 1.0e+08
 mov_hist <- hist(movies$budget, labels = TRUE,breaks = 18)
@@ -129,24 +130,17 @@ cor(movies_num)
 ```
 
 ```{r}
-# Responding to Q1
+# ~~~~~ Responding to Q1 ~~~~~
 ggpairs(movies[c("score", "votes")])
 # From chart we see that the correlation is extremely significant. 
 var(movies$votes)
 # From above note extremely high variability
-densityPlot(log(movies$votes))
-
-ggpairs(data.frame(movies$score, log(movies$votes)))
 ```
 
-```{r, echo = FALSE}
-lm_num <- lm(score ~ ., data = movies_num)
-summary(lm_num)
-vif(lm_num)
-```
+--[RESPOND TO Q1 HERE]--
 
 ```{r}
-# ~~~~~ MODEL 1 ~~~~~~~~~
+# ~~~~~ MODEL 1 ~~~~~
 # fit model and summary output
 model1 <- lm(formula = score ~ rating + runtime + genre + month + year + votes + budget + gross + return_prop , data = movies)
 summary(model1)
@@ -157,7 +151,9 @@ While some levels of the variable categorical *genre* are deemed significant pre
 
 ```{r}
 # residual analysis
+par(mfrow=c(2,2))
 plot(model1)
+par(mfrow=c(1,1))
 ```
 
 From the Residuals vs Fitted plot, the residuals are not linear and exhibit heteroskedasticity. The QQ plot suggests that the residuals are not normally distributed as the lower and higher standardized residuals do not line up with the theoretical quantiles. We do have some outliers as well as one particularly high leverage point observations 2817 (The 2007 movie "Paranormal Activity").
@@ -179,6 +175,7 @@ cbind(summary(model1_backward)$which, "adjusted r^2" = summary(model1_backward)$
 Using a step-wise model selection procedure with $R^2_{adj}$ as a selection criterion, we will choose a model which produces the maximum value for $R^2_{adj}$. This method will implement partial F-tests and then one-by-one eliminate the least significant predictor. In this case, per both backward and forward elimination, the suggested model is score ~ ratingR, runtime, genreAnimation, genreBiography, genreDrama, genreHorror, votes, budget. 
 
 Since only 1 of 8 levels for *rating* is deemed significant, and only 4 of 15 levels for *genre* is deemed significant. We will drop these predictors along with *return_prop*, *gross*, *year*, and *month* from the model and analyze the model again.
+
 ```{r}
 # ~~~~~ MODEL 2 ~~~~~~~~~
 # fit model and summary output
@@ -188,9 +185,12 @@ summary(model2)
 
 ```{r}
 # residual analysis
+par(mfrow=c(2,2))
 plot(model2)
+par(mfrow=c(1,1))
 ```
 
+--[[EXPLAIN BELOW]]--
 Diagnosis:
 
 Residuals vs Fitted: non-linearity, heteroskedasticity
