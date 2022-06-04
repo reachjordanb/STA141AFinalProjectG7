@@ -319,5 +319,30 @@ plot(model6)
 
 Residuals are looking way better. Linearity improved, not quite there but *much* closer. Homoskedasticity appears more likely. Residual Quantiles are quite close to theoretical quantiles, could pass for normality.
 
+```{r}
+# ~~~~~~~~ Residual Analysis: Formal Tests ~~~~~~~~
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
