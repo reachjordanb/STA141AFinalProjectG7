@@ -55,7 +55,7 @@ knitr::include_graphics(c("plots/boxplotYearBudget.png", "plots/boxplotScoreBudg
 
 see figure \@ref(fig:bothBox)
 
-```{r scoreVotesCorr, fig.cap='Correlation matrix of Score and Votes', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='50%',out.height='50%'}
+```{r scoreVotesCorr, fig.cap='Correlation matrix of Score and Votes', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='30%',out.height='30%'}
 knitr::include_graphics("plots/scoreVotesCorr.png")
 ```
 
