@@ -157,7 +157,7 @@ mean(mean_q1_3$score)
 
 ```{r}
 # ~~~~~ Responding to Q2 ~~~~~
-length(unique(movies)
+length(unique(movies))
 ```
 
 ```{r}
