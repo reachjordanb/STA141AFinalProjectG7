@@ -5,12 +5,13 @@ date: '2022-06-05'
 output: bookdown::html_document2
 bibliography: references.bib
 ---
+---
 
-## Introduction
+# Introduction
 
 It is undeniable that movies and films are one of the most beloved forms of entertainment across the modern world. Throughout the history of this medium, people continue to marvel over the advancements—ranging from the content to the visuals themselves. As the sophistication of movies evolve, so do people and what they value for entertainment. Are we able to predict how well received a movie will be based on its characteristics or other quantifiable attributes, or is it really all just “movie magic?” Can your favorite genre be defined simply by its reception, rating, or budget? With this project, we will take a statistical approach to peel back the curtain and get a behind-the-scenes look at the movie industry, to see if it really is all magic after all.
 
-## Data Description
+# Data Description
 
 There are 7,668 movies in the dataset from the years 1986 to 2016. Because IMDb scores are a US-based metric, we decided to eliminate the movies that were not created in the United States from the database so as to not have irrelevant information within our statistical analysis. We also decided to remove any rows that contained any N/A values. In total, we examined 4,325 movies after cleaning the data. See Figure \@ref(fig:dataTable)
 
@@ -18,63 +19,73 @@ There are 7,668 movies in the dataset from the years 1986 to 2016. Because IMDb 
 knitr::include_graphics("plots/dataTable.png")
 ```
 
-## Research Questions
+# Research Questions
 
 1. What are the strongest predictors of IMDb score; that is, are there variables that strongly predict if a movie will be well received by audiences? 
 
 2. How can we group movies together that contain similar attributes so that we can recommend similar movies to others?
 
-## Data Visualization
+# Data Visualization
 
-Here is an example for referencing an image. You can write:
-
-Please see Figure \@ref(fig:histBudget) . The labeling will happen automatically.
-
-```{r histBudget, fig.cap='Histogram of Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
+```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='80%',out.height='30%'}
 knitr::include_graphics("plots/histBudget.png")
 ```
 
-See figure \@ref(fig:yearBudget)
+See figure \@ref(fig:bothBox)
 
-```{r yearBudget, fig.cap='Boxplot of Year vs Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
+```{r yearBudget, eval = FALSE, fig.cap='Boxplot of Year vs Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
+# LEGACY
 knitr::include_graphics("plots/boxplotYearBudget.png")
+```
+
+```{r scoreBudget, eval = FALSE, fig.cap='Boxplot of Score vs Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
+# LEGACY
+knitr::include_graphics("plots/boxplotScoreBudget.png")
+```
+
+```{r bothBox, fig.cap='Boxplot of Year vs. Budget and Boxplot of Score vs. Budget', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='50%'}
+knitr::include_graphics(c("plots/boxplotYearBudget.png", "plots/boxplotScoreBudget.png"))
+
 ```
 
 see figure \@ref(fig:scoreBudget)
 
-```{r scoreBudget, fig.cap='Boxplot of Score vs Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
-knitr::include_graphics("plots/boxplotScoreBudget.png")
-```
 
-## Data Analysis/Results
+# Data Analysis/Results
 
-### Multiple Regression
+## Multiple Regression
 
-```{r residuals1, fig.cap='Residual Plots for Initial Model', echo=FALSE,warning=FALSE,out.width='60%',out.height='70%'}
+```{r residuals1, eval = FALSE, fig.cap='Residual Plots for Initial Model', echo=FALSE,warning=FALSE,out.width='60%',out.height='70%'}
+# LEGACY
 knitr::include_graphics("plots/residuals1.png")
 ```
 
-```{r residualsFinal, fig.cap='Residual Plots for Final Model', echo=FALSE,warning=FALSE,out.width='60%',out.height='70%'}
+```{r residualsFinal, eval = FALSE, fig.cap='Residual Plots for Final Model', echo=FALSE,warning=FALSE,out.width='60%',out.height='70%'}
+# LEGACY
 knitr::include_graphics("plots/residualsFinal.png")
 ```
 
-### Cluster Analysis
+```{r residualsPlots, fig.cap='Full model residuals plots (left) and final model residuals plots (right)', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
+knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
+```
+
+## Cluster Analysis
 
 Example of how to cite the paper we used: @cluster . Notice, once it has been referenced in the paper, it is automatically added to our bibliography.
 
-## Discussion/Conclusion
+# Discussion/Conclusion
 
-## References
+# References
 
 <div id="refs"></div>
 
-## (APPENDIX) Code Appendix {-}
-### Data Cleaning
+# (APPENDIX) Code Appendix {-}
+## Data Cleaning
 
-### Exploration
+## Exploration
 
-### Regression
+## Regression
 
-### Cluster Analysis
+## Cluster Analysis
 
-### Plots
+## Plots
