@@ -136,12 +136,6 @@ The mean year of high budget movies is $2000.333$, while the mean score of high 
 
 For low budget movies, the mean year is $2009.117$, while the mean score of low budget movies is $6.579835$.
 
-```{r, echo = FALSE}
-movies_num <- movies[unlist(lapply(movies, is.numeric))]
-movies_num <- movies_num[-2]
-cor(movies_num)
-```
-
 ```{r}
 # ~~~~~ Responding to Q1 ~~~~~
 ggpairs(movies[c("score", "votes")])
@@ -160,7 +154,10 @@ mean_q1_3 <- movies[movies$votes >= 500000,]
 mean(mean_q1_3$score)
 ```
 
---[RESPOND TO Q1 HERE]--
+```{r}
+# ~~~~~ Responding to Q2 ~~~~~
+length(unique(movies)
+```
 
 ```{r}
 # ~~~~~ MODEL 1 ~~~~~
