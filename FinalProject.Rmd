@@ -89,6 +89,18 @@ for (i in 1:nrow(movies)){
 }
 ```
 
+```{r}
+#check for NAs
+movies_test <- movies_original[movies_original$country == "United States",]
+
+# number of NAs
+sum(rowSums(is.na(movies_test)) != 0)
+
+# count NAs by variable
+NAS_var <- colSums(is.na(movies_test))
+NAS_var <- NAS_var[NAS_var != 0]
+```
+
 ```{r, echo = FALSE, message = FALSE}
 ggpairs(movies[,-1])
 ```
@@ -136,6 +148,16 @@ ggpairs(movies[c("score", "votes")])
 # From chart we see that the correlation is extremely significant. 
 var(movies$votes)
 # From above note extremely high variability
+movies_q1_1 <- movies[movies$votes >= 200000,]
+ggpairs(movies_q1_1[c("score", "votes")])
+
+mean(movies$score)
+
+mean_q1_2 <- movies[movies$votes <= 1000,]
+mean(mean_q1_2$score)
+
+mean_q1_3 <- movies[movies$votes >= 500000,]
+mean(mean_q1_3$score)
 ```
 
 --[RESPOND TO Q1 HERE]--
