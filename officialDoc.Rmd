@@ -105,7 +105,7 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 
 # Discussion/Conclusion
 
-
+**Multiple Regression:** One of the main issues we kept running into with our multiple regression model was that we continually had high-leverage points. Upon closer examination of the films that constituted these points we gained some insight into the predictive capabilities of this data set. The movies in our data with high leverage included: Pulp Fiction, The Dark Knight, The Shawshank Redemption, The Matrix, Forrest Gump and Inception. Even if you are not an avid movie enthusiast, you probably recognize most the films in this list. So our model may give you an idea of IMDB score based on the budget, number of votes and runtime of you average, run-of-the-mill film. What our model struggles to predict are these super-hit classic films that rock our cultural world. This suggests that there is some other layer movie magic which is not quantified in our model. This could include other movie metrics like script quality, actor performance, cinematography, or novelty. Our findings suggest that there are layers to the art of film-making which are not represented in our data, yet are both important to public reception and difficult to measure. Perhaps this is why they call it movie magic!
 
 # References
 
