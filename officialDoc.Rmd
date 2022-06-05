@@ -59,7 +59,7 @@ see figure \@ref(fig:bothBox)
 knitr::include_graphics("plots/scoreVotesCorr.png")
 ```
 
-**Responding to Comment #1:** 
+**Responding to Comment #1:** We explored the relationship between the number of votes and IMDB score, and ultimately decided to consider movies with all numbers of votes in our predictive model. This is because `votes` does end up being a good indicator of how well received a movie is. Generally, movies with low numbers of votes also have lower scores. Our film with the lowest value for `votes` has $195$ votes and a score of $3.5$. The two movies with the highest values for votes have $2,400,000$ votes and scores of $9.3$ and $9.0$. The mean score for movies with $1,000$ votes or less is $5.3$, while the mean score for movies with at least $500,000$ votes is $7.8$. Votes ended up being one of the most significant predictors in the multiple regression (see Methods/Results), which follows the intuition that if a movie is well-received it will, in general, be part of the public discussion (i.e. voted on).
 
 # Methods/Results
 
