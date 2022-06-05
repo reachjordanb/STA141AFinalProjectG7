@@ -59,7 +59,7 @@ see figure \@ref(fig:bothBox)
 knitr::include_graphics("plots/scoreVotesCorr.png")
 ```
 
-**Responding to Comment #1:** Examining the relationship between `score` and `votes` expressed by the `ggpairs` plot in Figure \@ref(fig:scoreVotesCorr) above.
+**Responding to Comment #1:** We explored the relationship between the number of votes and IMDB score, and ultimately decided to consider movies with all numbers of votes in our predictive model. This is because `votes` does end up being a good indicator of how well received a movie is. Generally, movies with low numbers of votes also have lower scores. Our film with the lowest value for `votes` has $195$ votes and a score of $3.5$. The two movies with the highest values for votes have $2,400,000$ votes and scores of $9.3$ and $9.0$. The mean score for movies with $1,000$ votes or less is $5.3$, while the mean score for movies with at least $500,000$ votes is $7.8$. Votes ended up being one of the most significant predictors in the multiple regression (see Methods/Results), which follows the intuition that if a movie is well-received it will, in general, be part of the public discussion (i.e. voted on).
 
 # <span style="color: mediumslateblue;">Methods and Results</span>
 
@@ -73,7 +73,11 @@ Next, using a step-wise model selection procedure with $R^2_{adj}$ as a selectio
 
 Since only 1 of 8 levels for `rating` is deemed significant, and only 4 of 15 levels for `genre` is deemed significant. We dropped these predictors along with `return_prop`, `gross`, `year` and `month` from the model, thus creating model2. What we found was that in model2 all the included predictors were significant, yet the residuals exhibited the same issues as those from model1. Since the residuals were nonlinear and heteroskedastic, the model was a good candidate for a boxcox transformation. We created and examined a boxcox plot which had its maximum value near $\lambda = 2$, suggesting we raise $\hat{score}$ to the 2nd power. We fit the new model (model3) as such:
 
+
 $$\hat{\text{score}} = \sqrt{\hat\beta_0 + \hat\beta_{\text{runtime}} \cdot \text{runtime} + \hat\beta_{\text{votes}} \cdot \text{votes} + \hat\beta_{\text{budget}} \cdot \text{budget}}$$
+
+$$\hat{score} = \sqrt{\hat\beta_0 + \hat\beta_{\text{runtime}} \cdot \text{runtime} + \hat\beta_{\text{votes}} \cdot \text{votes} + \hat\beta_{\text{budget}} \cdot \text{budget}}$$
+
 
 With model3, our residual plots began to improve and our $R^2_{adj}$ increased. Yet, we had some high leverage points. We removed them from the model, fit a new model, repeated our analysis, found new high leverage points, and removed those as well. At this point, we decided it would be inappropriate to continue to truncate the data. Another boxcox transformation was implemented and the final model was reached:
 
@@ -104,7 +108,7 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 
 # <span style="color: mediumslateblue;">Discussion and Conclusion</span>
 
-**Multiple Regression:** One of the main issues we kept running into with our multiple regression model was that we continually had high-leverage points. Upon closer examination of the films that constituted these points we gained some insight into the predictive capabilities of this data set. The movies in our data with high leverage included: Pulp Fiction, The Dark Knight, The Shawshank Redemption, The Matrix, Forrest Gump and Inception. Even if you are not an avid movie enthusiast, you probably recognize most the films in this list. So our model may give you an idea of IMDB score based on the budget, number of votes and runtime of you average, run-of-the-mill film. What our model struggles to predict are these super-hit classic films that rock our cultural world. This suggests that there is some other layer movie magic which is not quantified in our model. This could include other movie metrics like script quality, actor performance, cinematography, or novelty. Our findings suggest that there are layers to the art of film-making which are not represented in our data, yet are both important to public reception and difficult to measure. Perhaps this is why they call it movie magic!
+**Multiple Regression:** One of the main issues we encountered with each multiple regression model was that they continually had high-leverage points. Upon closer examination of the films that constituted these points we gained some insight into the predictive capabilities of this data set. The movies in our data with high leverage included: Pulp Fiction, The Dark Knight, The Shawshank Redemption, The Matrix, Forrest Gump and Inception. Even if you are not an avid movie enthusiast, you probably recognize most of the films in this list. What our model struggles to predict are these super-hit classic films that rock our cultural world. However, this model may give you an idea of IMDB score based on the budget, number of votes and runtime of you average, run-of-the-mill film. This suggests that there are other layers to the art of film-making not quantified in this data. These could include movie metrics like script quality, actor performance, cinematography, or novelty. Our findings suggest these unrepresented qualities are important to public reception, yet they may be difficult to measure. Perhaps this is why they call it movie magic!
 
 # <span style="color: mediumslateblue;">References</span>
 [WE NEED TO CITE CRAN]
