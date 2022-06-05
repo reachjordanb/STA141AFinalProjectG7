@@ -109,7 +109,7 @@ This data set contains a large number of categorical variables `rating`, `genre`
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
 
-The most interesting finding in the Full Hierarchial Clustering was the red cluster, which had a different clade than the green and blue. The Reduced Variable Hierarchial Clustering ended up with 6 clusters, while the Full Clustering had 3.
+For the Reduced Variables Hierarchial Clustering, we removed the variables that were found the be not significant, leaving the reduced model with rating, genre, year, score, adn budget. The most interesting finding in the Full Hierarchial Clustering was the red cluster, which had a different clade than the green and blue. The Reduced Variable Hierarchial Clustering ended up with 6 cclades, while the Full Clustering had 3.
 
 Movies from full hierarchical clustering:
   
@@ -121,7 +121,7 @@ Movies from reduced variable hierarchical clustering:
 We used a function to find the mean and proportion of each variable in each cluster of both models:
 --tables
 
-The variables that both clusters share (rating, genre, year, score, and budget) had the same overall mean and proportion.
+The variables that both clusters share (rating, genre, year, score, and budget) had the same overall mean and proportion, which indicates that the data isn't being changed based on how it is clustered. 
 In comparing the first clade of each clustering, we see that the mean rating and genre are the same, however the proportion of rating is higher and the proportion for genre is lower in the Reduced clustering. The year and scores are slightly different, however, the budget for the Reduced model is much higher than the budget for the Full clustering. 
 
 # <span style="color: mediumslateblue;">Discussion and Conclusion</span>
