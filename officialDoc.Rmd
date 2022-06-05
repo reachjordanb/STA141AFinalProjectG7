@@ -111,19 +111,18 @@ This data set contains a large number of categorical variables `rating`, `genre`
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
 
-For the Reduced Variables Hierarchial Clustering, we removed the variables that were found the be not significant, leaving the reduced model with rating, genre, year, score, adn budget. The most interesting finding in the Full Hierarchial Clustering was the red cluster, which had a different clade than the green and blue. The Reduced Variable Hierarchial Clustering ended up with 6 cclades, while the Full Clustering had 3.
+For the Reduced Variables Hierarchial Clustering, we removed the variables that were found the be not significant, leaving the reduced model with rating, genre, year, score, adn budget. The most interesting finding in the Full Hierarchial Clustering was the red cluster, which had a different clade than the green and blue. The Reduced Variable Hierarchial Clustering ended up with 6 clades, while the Full Clustering had 3.
 
-Movies from full hierarchical clustering:
-  
--- image
 
-Movies from reduced variable hierarchical clustering:
--- image
+We used a function to find the mean and proportion of each variable in each cluster of the Full Hierarchial Clustering model and the Reduced Variables Hierarchial Clustering model:
 
-We used a function to find the mean and proportion of each variable in each cluster of both models:
-```{r dendPlots, fig.cap='Means of variables of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
-knitr::include_graphics(c("plots/full_hclust_means.png", "plots/reduced_hclust_means.png"))
+```{r fullhclustMeans, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='89%',out.height='65%'}
+knitr::include_graphics("plots/full_hclust_means.png")
 ```
+```{r reducedhclustMeans, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
+knitr::include_graphics("plots/reduced_hclust_means.png")
+```
+
 The variables that both clusters share (rating, genre, year, score, and budget) had the same overall mean and proportion, which indicates that the data isn't being changed based on how it is clustered. 
 In comparing the first clade of each clustering, we see that the mean rating and genre are the same, however the proportion of rating is higher and the proportion for genre is lower in the Reduced clustering. The year and scores are slightly different, however, the budget for the Reduced model is much higher than the budget for the Full clustering. 
 
