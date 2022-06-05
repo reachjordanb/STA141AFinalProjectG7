@@ -36,6 +36,8 @@ It is also important to discuss the presence of NAs in this dataset. There were 
 ```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='60%',out.height='30%'}
 knitr::include_graphics("plots/histBudget.png")
 ```
+Based on the distribution of the histogram, we broke down `budget` into two levels: Movies with a budget greater than $80,000,000 are categorized as “high” budget while those with a budget less than or equal to $80,000,000 are categorized as “low” budget. These two levels are stored as a factor budget_cat.
+
 
 See figure \@ref(fig:histBudget)
 
@@ -43,6 +45,7 @@ See figure \@ref(fig:histBudget)
 # LEGACY
 knitr::include_graphics("plots/boxplotYearBudget.png")
 ```
+The mean year of high budget movies is 2000.333, while the mean score of high budget movies is 6.302996. For low budget movies, the mean year is 2009.117, while the mean score of low budget movies is 6.579835.
 
 ```{r scoreBudget, eval = FALSE, fig.cap='Boxplot of Score vs Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
 # LEGACY
