@@ -108,7 +108,12 @@ knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
 The most interesting finding in the Full Hierarchial Clustering was the red cluster, which had a different clade than the green and blue. In examining the movies that made up this cluster, we found 
 
+Movies from full hierarchical clustering:
+  
+-- image
 
+Movies from reduced variable hierarchical clustering:
+-- image
 
 # <span style="color: mediumslateblue;">Discussion and Conclusion</span>
 
