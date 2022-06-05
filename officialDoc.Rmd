@@ -106,7 +106,7 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 ```{r dendPlots, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
-The most interesting finding in the Full Hierarchial Clustering was the red cluster, which had a different clade than the green and blue. In examining the movies that made up this cluster, we found 
+The most interesting finding in the Full Hierarchial Clustering was the red cluster, which had a different clade than the green and blue. The Reduced Variable Hierarchial Clustering ended up with 6 clusters, while the Full Clustering had 3.
 
 Movies from full hierarchical clustering:
   
@@ -114,6 +114,12 @@ Movies from full hierarchical clustering:
 
 Movies from reduced variable hierarchical clustering:
 -- image
+
+We used a function to find the mean and proportion of each variable in each cluster of both models:
+--tables
+
+The variables that both clusters share (rating, genre, year, score, and budget) had the same overall mean and proportion.
+In comparing the first clade of each clustering, we see that the mean rating and genre are the same, however the proportion of rating is higher and the proportion for genre is lower in the Reduced clustering. The year and scores are slightly different, however, the budget for the Reduced model is much higher than the budget for the Full clustering. 
 
 # <span style="color: mediumslateblue;">Discussion and Conclusion</span>
 
