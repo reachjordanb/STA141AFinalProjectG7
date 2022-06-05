@@ -121,8 +121,9 @@ Movies from reduced variable hierarchical clustering:
 -- image
 
 We used a function to find the mean and proportion of each variable in each cluster of both models:
---tables
-
+```{r dendPlots, fig.cap='Means of variables of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
+knitr::include_graphics(c("plots/full_hclust_means.png", "plots/reduced_hclust_means.png"))
+```
 The variables that both clusters share (rating, genre, year, score, and budget) had the same overall mean and proportion, which indicates that the data isn't being changed based on how it is clustered. 
 In comparing the first clade of each clustering, we see that the mean rating and genre are the same, however the proportion of rating is higher and the proportion for genre is lower in the Reduced clustering. The year and scores are slightly different, however, the budget for the Reduced model is much higher than the budget for the Full clustering. 
 
