@@ -15,7 +15,7 @@ It is undeniable that movies and films are one of the most beloved forms of ente
 
 The data set we set out to investigate was found on Kaggle: . Originally, the data was scraped from the online movie review and informational website IMDB. There are 7668 movies in the data set from the years 1980 to 2020. Since IMDb are a US-based metric, we decided to eliminate the movies that were not created in the United States in order to hopefully gain a clearer insight into our nation's domestic movie industry. We also decided to remove any rows that contained any NA values. In total, we examined 4325 movies after cleaning the data. See Figure \@ref(fig:dataTable)
 
-The original dataset as pulled from Kaggle contained a different set of 
+The original dataset as pulled from Kaggle contained 15 variables. Ultimately we removed four of them in our cleaning process (`director`, `writer`, `star`, and `company`) and added two of our own (`budget_cat` and `return_prop`). The justification for removing those four variables is described below ("Responding to Comment #2").
 
 ```{r dataTable, fig.cap="Attributes of 'Movie Industry' Data after cleaning", fig.align = 'center', echo=FALSE,warning=FALSE,out.width='50%',out.height='50%'}
 knitr::include_graphics("plots/dataTable.png")
@@ -23,7 +23,7 @@ knitr::include_graphics("plots/dataTable.png")
 
 It is also important to discuss the presence of NAs in this dataset. There were 1150 movies with NAs left over after isolating the data to just the movies labeled as having been produced in the United States (of which there were 5475). There were 3 NAs in `score`, 3 NAs in `votes`, 1099 NAs in `budget`, 98 NAs in `gross`, and 2 NAs in `runtime`. From this breakdown it's clear to see that almost the entirety of the missing values in our dataset come from the variable `budget`. We decided to simply remove all of the values that contained at least one NA, since we considered `budget` too important a variable to remove from our analysis.
 
-*Responding to Comment #2*: Our analysis found 1726 unique values of `director`, 2631 unique values of `writer`, 1524 unique values of `star` and 1078 unique values of `company`. Considering that our data set only had 4325 movies after cleaning, we concluded that it would not be possible to use these values in our analysis and hence they were removed from the cleaned data set. There were simply too many unique values to effectively make dummy variables for them in either our regression model or our cluster analysis.
+**Responding to Comment #2**: Our analysis found 1726 unique values of `director`, 2631 unique values of `writer`, 1524 unique values of `star` and 1078 unique values of `company`. Considering that our data set only had 4325 movies after cleaning, we concluded that it would not be possible to use these values in our analysis and hence they were removed from the cleaned data set. There were simply too many unique values to effectively make dummy variables for them in either our regression model or our cluster analysis.
 
 # Research Questions
 
@@ -33,7 +33,7 @@ It is also important to discuss the presence of NAs in this dataset. There were 
 
 # Data Visualization
 
-```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='80%',out.height='30%'}
+```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='60%',out.height='30%'}
 knitr::include_graphics("plots/histBudget.png")
 ```
 
