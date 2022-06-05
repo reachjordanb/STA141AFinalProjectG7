@@ -100,9 +100,10 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 
 [Example of how to cite the paper we used: @cluster . Notice, once it has been referenced in the paper, it is automatically added to our bibliography.]
 
-```{r dendPlots, fig.cap='Dendrogram plots', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
+```{r dendPlots, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
+
 
 
 # <span style="color: mediumslateblue;">Discussion and Conclusion</span>
