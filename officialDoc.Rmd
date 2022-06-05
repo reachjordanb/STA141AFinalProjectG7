@@ -112,6 +112,7 @@ knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
 
 We removed variables to give us a clustering we believed would be intuitive to compare to the full model, leaving the reduced model with the variables rating, genre, year, score, and budget. The most interesting finding was the red cluster of the Full Hierarchial Clustering, which had a different clustering than the green and blue. The Reduced Variable Hierarchial Clustering ended up with 6 clades, while the Full Clustering had 3.
+Looking at the movies in the first cluster of both models, ---
 
 
 We used a function to find the mean and proportion of each variable in each cluster of the Full Hierarchial Clustering model and the Reduced Variables Hierarchial Clustering model:
