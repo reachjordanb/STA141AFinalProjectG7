@@ -9,21 +9,21 @@ bibliography: references.bib
 
 # Introduction
 
-It is undeniable that movies and films are one of the most beloved forms of entertainment across the modern world, especially so in the United States as it is the home of Hollywood. The medium of film has grown into a truly massive industry in the United States and film producers risk devastating losses should a major motion picture be a major flop. As a result, predictions of consumer satisfaction are vital to the success of the industry. An ability to predict how well received a movie will be based on its characteristics or other quantifiable attributes could remove a great deal of the financial risk involved in this industry. Likewise, aggregating movies based on their characteristics may provide new insights into the industry itself.
+It is undeniable that movies and films are one of the most beloved forms of entertainment across the modern world, especially so in the United States as it is the home of Hollywood. The medium of film has grown into a truly massive industry in the United States and film producers risk devastating financial losses and blows to their reputation should a major motion picture be a major flop. As a result, predictions of consumer satisfaction are vital to the success of the industry. An ability to predict how well received a movie will be based on its characteristics or other quantifiable attributes could remove a great deal of the financial risk involved in this industry. Likewise, aggregating movies based on their characteristics may provide new insights into the industry itself.
 
 # Data Description
 
-The data set we set out to investigate was found on Kaggle: . Originally, the data was scraped from the online movie review and informational website IMDB. There are 7,668 movies in the data set from the years 1980 to 2020. Since IMDb are a US-based metric, we decided to eliminate the movies that were not created in the United States in order to hopefully gain a clearer insight into our nation's domestic movie industry. We also decided to remove any rows that contained any NA values. In total, we examined 4,325 movies after cleaning the data. See Figure \@ref(fig:dataTable)
+The data set we set out to investigate was found on Kaggle: . Originally, the data was scraped from the online movie review and informational website IMDB. There are 7668 movies in the data set from the years 1980 to 2020. Since IMDb are a US-based metric, we decided to eliminate the movies that were not created in the United States in order to hopefully gain a clearer insight into our nation's domestic movie industry. We also decided to remove any rows that contained any NA values. In total, we examined 4325 movies after cleaning the data. See Figure \@ref(fig:dataTable)
 
-```{r dataTable, fig.cap="Attributes of 'Movie Industry' Data", fig.align = 'center', echo=FALSE,warning=FALSE,out.width='50%',out.height='50%'}
+The original dataset as pulled from Kaggle contained 15 variables. Ultimately we removed four of them in our cleaning process (`director`, `writer`, `star`, and `company`) and added two of our own (`budget_cat` and `return_prop`). The justification for removing those four variables is described below ("Responding to Comment #2"). Regarding `budget_cat` see Figure \@ref(fig:histBudget) for more detail.
+
+```{r dataTable, fig.cap="Attributes of 'Movie Industry' Data after cleaning", fig.align = 'center', echo=FALSE,warning=FALSE,out.width='50%',out.height='50%'}
 knitr::include_graphics("plots/dataTable.png")
 ```
 
---[IMPORTANT NOTES ABOUT DATASET]--
-
 It is also important to discuss the presence of NAs in this dataset. There were 1150 movies with NAs left over after isolating the data to just the movies labeled as having been produced in the United States (of which there were 5475). There were 3 NAs in `score`, 3 NAs in `votes`, 1099 NAs in `budget`, 98 NAs in `gross`, and 2 NAs in `runtime`. From this breakdown it's clear to see that almost the entirety of the missing values in our dataset come from the variable `budget`. We decided to simply remove all of the values that contained at least one NA, since we considered `budget` too important a variable to remove from our analysis.
 
---[ANSWER QUESTION 2]--
+**Responding to Comment #2:** Our analysis found 1726 unique values of `director`, 2631 unique values of `writer`, 1524 unique values of `star` and 1078 unique values of `company`. Considering that our data set only had 4325 movies after cleaning, we concluded that it would not be possible to use these values in our analysis and hence they were removed from the cleaned data set. There were simply too many unique values to effectively make dummy variables for them in either our regression model or our cluster analysis.
 
 # Research Questions
 
@@ -33,11 +33,11 @@ It is also important to discuss the presence of NAs in this dataset. There were 
 
 # Data Visualization
 
-```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='80%',out.height='30%'}
+```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='60%',out.height='30%'}
 knitr::include_graphics("plots/histBudget.png")
 ```
 
-See figure \@ref(fig:bothBox)
+See figure \@ref(fig:histBudget)
 
 ```{r yearBudget, eval = FALSE, fig.cap='Boxplot of Year vs Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
 # LEGACY
@@ -59,7 +59,7 @@ see figure \@ref(fig:bothBox)
 knitr::include_graphics("plots/scoreVotesCorr.png")
 ```
 
-[ANSWER QUESTION #1]
+**Responding to Comment #1:** 
 
 # Methods/Results
 
