@@ -59,7 +59,7 @@ see figure \@ref(fig:bothBox)
 knitr::include_graphics("plots/scoreVotesCorr.png")
 ```
 
-**Responding to Comment #1:** 
+**Responding to Comment #1:** Examining the relationship between `score` and `votes` expressed by the `ggpairs` plot in Figure \@ref(fig:scoreVotesCorr) above.
 
 # Data Analysis/Results
 
@@ -82,7 +82,6 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 ## Cluster Analysis
 
 [Example of how to cite the paper we used: @cluster . Notice, once it has been referenced in the paper, it is automatically added to our bibliography.]
-
 
 
 # Discussion/Conclusion
