@@ -391,11 +391,12 @@ movies[cut_gow_int_hclust == 6, 1]
 ```{r}
 # ~~~~function~~~~
 means_by_cluster <- function(cut_hclust, df){
+  # set up return object
   center_df <- as.data.frame(matrix(NA, nrow = (max(unique(cut_hclust)) + 1), ncol = dim(df)[2]))
   colnames(center_df) <- names(df)
   rownames(center_df) <- c(unique(cut_hclust), "Average Overall")
   
-  # iterate through the clusters
+  # iterate through the clusters and overall average
   for(i in 1:(max(unique(cut_hclust)) + 1)){
     if(i == (max(unique(cut_hclust)) + 1)){
       subset_df <- df
@@ -403,15 +404,16 @@ means_by_cluster <- function(cut_hclust, df){
       subset_df <- df[cut_hclust == i,]
     }
     
+    # iterate through each column for measure of center
     for(j in 1:dim(subset_df)[2]){
       center <- NA
       
       if(is.numeric(subset_df[,j])){
-        # handle numeric
+        # when numeric, use mean
         center <- round(mean(subset_df[,j]), digits = 2)
         
       }else{
-        # otherwise handle categorical
+        # when categorical, use most frequent value and give proportion of that value
         center <- names(tail(sort(table(subset_df[,j])), 1))
         prop <- round(tail(sort(table(subset_df[,j])), 1) / length(subset_df[,j]),
                       digits = 2)
