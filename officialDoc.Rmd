@@ -103,9 +103,12 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 
 [Example of how to cite the paper we used: @cluster . Notice, once it has been referenced in the paper, it is automatically added to our bibliography.]
 
+This data set contains a large number of categorical variables `rating`, `genre`, and `month` that might be relevant to the aggregation of similar movies. As these values are categorical values, a Euclidean distance is not suitable for evaluating the degree of similiarity between observations. As a result, we relied on a different distance measure to achieve this: Gower distance.
+
 ```{r dendPlots, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
+
 The most interesting finding in the Full Hierarchial Clustering was the red cluster, which had a different clade than the green and blue. The Reduced Variable Hierarchial Clustering ended up with 6 clusters, while the Full Clustering had 3.
 
 Movies from full hierarchical clustering:
