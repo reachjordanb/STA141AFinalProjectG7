@@ -55,15 +55,33 @@ knitr::include_graphics(c("plots/boxplotYearBudget.png", "plots/boxplotScoreBudg
 
 see figure \@ref(fig:bothBox)
 
-```{r scoreVotesCorr, fig.cap='Correlation matrix of Score and Votes', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='50%',out.height='50%'}
+```{r scoreVotesCorr, fig.cap='Correlation matrix of Score and Votes', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='30%',out.height='30%'}
 knitr::include_graphics("plots/scoreVotesCorr.png")
 ```
 
 **Responding to Comment #1:** Examining the relationship between `score` and `votes` expressed by the `ggpairs` plot in Figure \@ref(fig:scoreVotesCorr) above.
 
-# Data Analysis/Results
+# Methods/Results
 
 ## Multiple Regression
+
+To answer research question number 1, we attempt to implement a multiple regression linear model to determine if any of the variables in our data set are viable predictors of `score`. We fit an initial model (model1) that regressed score on all of the variables depicted in figure \@ref(fig:dataTable) , except `budget_cat`, which was created for data exploration purposes. After running the model and analyzing the t-tests via the `summary()` function, we found that while some levels of the variable categorical `genre` are deemed significant predictors of `score` (e.g. `drama`, `animation`), the majority have very high p-values and are not deemed significant predictors (e.g. `thriller`, `mystery`). `Month` is not a significant predictor, nor `gross`, nor `return_prop`.
+
+We then performed a residual analysis on model1. See figure \@ref(fig:residualsPlots) (LEFT). From the Residuals vs Fitted plot, the residuals are not linear and exhibit heteroskedasticity. The QQ plot suggests that the residuals are not normally distributed as the lower and higher standardized residuals do not line up with the theoretical quantiles. We do have some outliers as well as one particularly high leverage point observations 2817 (The 2007 movie "Paranormal Activity").
+
+Next, using a step-wise model selection procedure with $R^2_{adj}$ as a selection criterion, we will choose a model which produces the maximum value for $R^2_{adj}$. We use $R^2_{adj}$ as a criterion, rather than $R^2$ because $R^2_{adj}$ is more appropriate for comparing models with different numbers of predictors. $R^2_{adj}$ will only increase for more predictors, if those predictors allow the model to explain more of the variance in the data. This method will implement partial F-tests and then one-by-one eliminate the least significant predictor. In this case, per both backward and forward elimination, the suggested model is `score` ~ `ratingR` + `runtime` + `genreAnimation` + `genreBiography` + `genreDrama` + `genreHorror` + `votes` + `budget`. 
+
+Since only 1 of 8 levels for `rating` is deemed significant, and only 4 of 15 levels for `genre` is deemed significant. We dropped these predictors along with `return_prop`, `gross`, `year` and `month` from the model, thus creating model2. What we found was that in model2 all the included predictors were significant, yet the residuals exhibited the same issues as those from model1. Since the residuals were nonlinear and heteroskedastic, the model was a good candidate for a boxcox transformation. We created and examined a boxcox plot which had its maximum value near $\lambda = 2$, suggesting we raise $\hat{score}$ to the 2nd power. We fit the new model (model3) as such:
+
+$\hat{score} = \sqrt{\hat\beta_0 + \hat\beta_{\text{runtime}} \cdot \text{runtime} + \hat\beta_{\text{votes}} \cdot \text{votes} + \hat\beta_{\text{budget}} \cdot \text{budget}}$
+
+With model3, our residual plots began to improve and our $R^2_{adj}$ increased. Yet, we had some high leverage points. We removed them from the model, fit a new model, repeated our analysis, found new high leverage points, and removed those as well. At this point, we decided it would be inappropriate to continue to truncate the data. Another boxcox transformation was implemented and the final model was reached:
+
+$$\hat{\text{score}} = \sqrt[4]{\hat\beta_0 + \hat\beta_{\text{runtime}} \cdot \text{runtime} + \hat\beta_{\text{votes}} \cdot \text{votes} + \hat\beta_{\text{budget}} \cdot \text{budget}}$$
+
+The final model achieves $R^2_{adj} = 0.4844$, which means that if this model is appropriate, the model above explains $48.44\%$ of the variance of `score`. The residual plots of the final model are not perfect but show significant improvement from the initial model. From Figure \@ref(fig:residualsPlots) (RIGHT): linearity was improved, not quite linear but *much* closer. Homoskedasticity appears more likely. Residual Quantiles are quite close to theoretical quantiles, and could pass for normality. We conducted formal tests with the following results: Shapiro-Wilk test concluded that our residuals were not normally distributed, Box-Pierce test indicated the residuals were independently distributed and Breusch-Pagan test concluded the residuals are not quite homoskedastic.
+
+
 
 ```{r residuals1, eval = FALSE, fig.cap='Residual Plots for Initial Model', echo=FALSE,warning=FALSE,out.width='60%',out.height='70%'}
 # LEGACY
@@ -85,6 +103,8 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 
 
 # Discussion/Conclusion
+
+**Multiple Regression:** One of the main issues we kept running into with our multiple regression model was that we continually had high-leverage points. Upon closer examination of the films that constituted these points we gained some insight into the predictive capabilities of this data set. The movies in our data with high leverage included: Pulp Fiction, The Dark Knight, The Shawshank Redemption, The Matrix, Forrest Gump and Inception. Even if you are not an avid movie enthusiast, you probably recognize most the films in this list. So our model may give you an idea of IMDB score based on the budget, number of votes and runtime of you average, run-of-the-mill film. What our model struggles to predict are these super-hit classic films that rock our cultural world. This suggests that there is some other layer movie magic which is not quantified in our model. This could include other movie metrics like script quality, actor performance, cinematography, or novelty. Our findings suggest that there are layers to the art of film-making which are not represented in our data, yet are both important to public reception and difficult to measure. Perhaps this is why they call it movie magic!
 
 # References
 
