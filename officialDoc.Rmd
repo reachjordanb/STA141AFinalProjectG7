@@ -12,7 +12,11 @@ It is undeniable that movies and films are one of the most beloved forms of ente
 
 # Data Description
 
-There are 7,668 movies in the dataset from the years 1986 to 2016. Because IMDb scores are a US-based metric, we decided to eliminate the movies that were not created in the United States from the database so as to not have irrelevant information within our statistical analysis. We also decided to remove any rows that contained any N/A values. In total, we examined 4,325 movies after cleaning the data.
+There are 7,668 movies in the dataset from the years 1986 to 2016. Because IMDb scores are a US-based metric, we decided to eliminate the movies that were not created in the United States from the database so as to not have irrelevant information within our statistical analysis. We also decided to remove any rows that contained any N/A values. In total, we examined 4,325 movies after cleaning the data. See Figure \@ref(fig:dataTable)
+
+```{r dataTable, fig.cap="Attributes of 'Movie Industry' Data", echo=FALSE,warning=FALSE,out.width='50%',out.height='50%'}
+knitr::include_graphics("plots/dataTable.png")
+```
 
 # Research Questions
 
