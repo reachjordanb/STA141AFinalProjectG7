@@ -7,31 +7,31 @@ bibliography: references.bib
 ---
 ---
 
-# Introduction
+# <span style="color: mediumslateblue;">Introduction</span>
 
 It is undeniable that movies and films are one of the most beloved forms of entertainment across the modern world, especially so in the United States as it is the home of Hollywood. The medium of film has grown into a truly massive industry in the United States and film producers risk devastating financial losses and blows to their reputation should a major motion picture be a major flop. As a result, predictions of consumer satisfaction are vital to the success of the industry. An ability to predict how well received a movie will be based on its characteristics or other quantifiable attributes could remove a great deal of the financial risk involved in this industry. Likewise, aggregating movies based on their characteristics may provide new insights into the industry itself.
 
-# Data Description
+# <span style="color: mediumslateblue;">Data Description</span>
 
 The data set we set out to investigate was found on Kaggle: . Originally, the data was scraped from the online movie review and informational website IMDB. There are 7668 movies in the data set from the years 1980 to 2020. Since IMDb are a US-based metric, we decided to eliminate the movies that were not created in the United States in order to hopefully gain a clearer insight into our nation's domestic movie industry. We also decided to remove any rows that contained any NA values. In total, we examined 4325 movies after cleaning the data. See Figure \@ref(fig:dataTable)
 
-The original dataset as pulled from Kaggle contained 15 variables. Ultimately we removed four of them in our cleaning process (`director`, `writer`, `star`, and `company`) and added two of our own (`budget_cat` and `return_prop`). The justification for removing those four variables is described below ("Responding to Comment #2"). Regarding `budget_cat` see Figure \@ref(fig:histBudget) for more detail.
+The original dataset as pulled from Kaggle contained 15 variables. Ultimately we removed four of them in our cleaning process (`director`, `writer`, `star`, and `company`) and added two of our own (`budget_cat` and `return_prop`). The justification for removing those four variables is described below ("Responding to Comment #2"). Regarding `budget_cat` see Figure \@ref(fig:histBudget) for more detail. Also, we converted a variable in the original data set called `released` which included exact date of release and country of release into just the `month` to see if month was a significant predictor, considering that country of origin had been reduced to the us and `year` was already a variable by itself.
 
 ```{r dataTable, fig.cap="Attributes of 'Movie Industry' Data after cleaning", fig.align = 'center', echo=FALSE,warning=FALSE,out.width='50%',out.height='50%'}
 knitr::include_graphics("plots/dataTable.png")
 ```
 
-It is also important to discuss the presence of NAs in this dataset. There were 1150 movies with NAs left over after isolating the data to just the movies labeled as having been produced in the United States (of which there were 5475). There were 3 NAs in `score`, 3 NAs in `votes`, 1099 NAs in `budget`, 98 NAs in `gross`, and 2 NAs in `runtime`. From this breakdown it's clear to see that almost the entirety of the missing values in our dataset come from the variable `budget`. We decided to simply remove all of the values that contained at least one NA, since we considered `budget` too important a variable to remove from our analysis.
+It is also important to discuss the presence of NAs in this dataset. There were 1150 movies with NAs left over after isolating the data to just the movies labeled as having been produced in the United States (of which there were 5475). There were 3 NAs in `score`, 3 NAs in `votes`, 1099 NAs in `budget`, 98 NAs in `gross`, and 2 NAs in `runtime`. From this breakdown it's clear to see that almost the entirety of the missing values in our data set come from the variable `budget`. We decided to simply remove all of the values that contained at least one NA, since we considered `budget` too important a variable to remove from our analysis.
 
 **Responding to Comment #2:** Our analysis found 1726 unique values of `director`, 2631 unique values of `writer`, 1524 unique values of `star` and 1078 unique values of `company`. Considering that our data set only had 4325 movies after cleaning, we concluded that it would not be possible to use these values in our analysis and hence they were removed from the cleaned data set. There were simply too many unique values to effectively make dummy variables for them in either our regression model or our cluster analysis.
 
-# Research Questions
+# <span style="color: mediumslateblue;">Research Questions</span>
 
 1. What are the strongest predictors of IMDb score; that is, are there variables that strongly predict if a movie will be well received by audiences? 
 
 2. How can we group movies together that contain similar attributes so that we can recommend similar movies to others?
 
-# Data Visualization
+# <span style="color: mediumslateblue;">Data Visualization</span>
 
 ```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='60%',out.height='30%'}
 knitr::include_graphics("plots/histBudget.png")
@@ -55,15 +55,15 @@ knitr::include_graphics(c("plots/boxplotYearBudget.png", "plots/boxplotScoreBudg
 
 see figure \@ref(fig:bothBox)
 
-```{r scoreVotesCorr, fig.cap='Correlation matrix of Score and Votes', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='30%',out.height='30%'}
+```{r scoreVotesCorr, fig.cap='Correlation matrix of Score and Votes', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='50%',out.height='50%'}
 knitr::include_graphics("plots/scoreVotesCorr.png")
 ```
 
 **Responding to Comment #1:** Examining the relationship between `score` and `votes` expressed by the `ggpairs` plot in Figure \@ref(fig:scoreVotesCorr) above.
 
-# Methods/Results
+# <span style="color: mediumslateblue;">Methods and Results</span>
 
-## Multiple Regression
+## <span style="color: mediumslateblue;">Multiple Regression</span>
 
 To answer research question number 1, we attempt to implement a multiple regression linear model to determine if any of the variables in our data set are viable predictors of `score`. We fit an initial model (model1) that regressed score on all of the variables depicted in figure \@ref(fig:dataTable) , except `budget_cat`, which was created for data exploration purposes. After running the model and analyzing the t-tests via the `summary()` function, we found that while some levels of the variable categorical `genre` are deemed significant predictors of `score` (e.g. `drama`, `animation`), the majority have very high p-values and are not deemed significant predictors (e.g. `thriller`, `mystery`). `Month` is not a significant predictor, nor `gross`, nor `return_prop`.
 
@@ -73,15 +73,13 @@ Next, using a step-wise model selection procedure with $R^2_{adj}$ as a selectio
 
 Since only 1 of 8 levels for `rating` is deemed significant, and only 4 of 15 levels for `genre` is deemed significant. We dropped these predictors along with `return_prop`, `gross`, `year` and `month` from the model, thus creating model2. What we found was that in model2 all the included predictors were significant, yet the residuals exhibited the same issues as those from model1. Since the residuals were nonlinear and heteroskedastic, the model was a good candidate for a boxcox transformation. We created and examined a boxcox plot which had its maximum value near $\lambda = 2$, suggesting we raise $\hat{score}$ to the 2nd power. We fit the new model (model3) as such:
 
-$\hat{score} = \sqrt{\hat\beta_0 + \hat\beta_{\text{runtime}} \cdot \text{runtime} + \hat\beta_{\text{votes}} \cdot \text{votes} + \hat\beta_{\text{budget}} \cdot \text{budget}}$
+$$\hat{\text{score}} = \sqrt{\hat\beta_0 + \hat\beta_{\text{runtime}} \cdot \text{runtime} + \hat\beta_{\text{votes}} \cdot \text{votes} + \hat\beta_{\text{budget}} \cdot \text{budget}}$$
 
 With model3, our residual plots began to improve and our $R^2_{adj}$ increased. Yet, we had some high leverage points. We removed them from the model, fit a new model, repeated our analysis, found new high leverage points, and removed those as well. At this point, we decided it would be inappropriate to continue to truncate the data. Another boxcox transformation was implemented and the final model was reached:
 
 $$\hat{\text{score}} = \sqrt[4]{\hat\beta_0 + \hat\beta_{\text{runtime}} \cdot \text{runtime} + \hat\beta_{\text{votes}} \cdot \text{votes} + \hat\beta_{\text{budget}} \cdot \text{budget}}$$
 
 The final model achieves $R^2_{adj} = 0.4844$, which means that if this model is appropriate, the model above explains $48.44\%$ of the variance of `score`. The residual plots of the final model are not perfect but show significant improvement from the initial model. From Figure \@ref(fig:residualsPlots) (RIGHT): linearity was improved, not quite linear but *much* closer. Homoskedasticity appears more likely. Residual Quantiles are quite close to theoretical quantiles, and could pass for normality. We conducted formal tests with the following results: Shapiro-Wilk test concluded that our residuals were not normally distributed, Box-Pierce test indicated the residuals were independently distributed and Breusch-Pagan test concluded the residuals are not quite homoskedastic.
-
-
 
 ```{r residuals1, eval = FALSE, fig.cap='Residual Plots for Initial Model', echo=FALSE,warning=FALSE,out.width='60%',out.height='70%'}
 # LEGACY
@@ -97,16 +95,19 @@ knitr::include_graphics("plots/residualsFinal.png")
 knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 ```
 
-## Cluster Analysis
+## <span style="color: mediumslateblue;">Cluster Analysis</span>
 
 [Example of how to cite the paper we used: @cluster . Notice, once it has been referenced in the paper, it is automatically added to our bibliography.]
 
 
-# Discussion/Conclusion
+
+
+# <span style="color: mediumslateblue;">Discussion and Conclusion</span>
 
 **Multiple Regression:** One of the main issues we kept running into with our multiple regression model was that we continually had high-leverage points. Upon closer examination of the films that constituted these points we gained some insight into the predictive capabilities of this data set. The movies in our data with high leverage included: Pulp Fiction, The Dark Knight, The Shawshank Redemption, The Matrix, Forrest Gump and Inception. Even if you are not an avid movie enthusiast, you probably recognize most the films in this list. So our model may give you an idea of IMDB score based on the budget, number of votes and runtime of you average, run-of-the-mill film. What our model struggles to predict are these super-hit classic films that rock our cultural world. This suggests that there is some other layer movie magic which is not quantified in our model. This could include other movie metrics like script quality, actor performance, cinematography, or novelty. Our findings suggest that there are layers to the art of film-making which are not represented in our data, yet are both important to public reception and difficult to measure. Perhaps this is why they call it movie magic!
 
-# References
+# <span style="color: mediumslateblue;">References</span>
+[WE NEED TO CITE CRAN]
 
 <div id="refs"></div>
 
