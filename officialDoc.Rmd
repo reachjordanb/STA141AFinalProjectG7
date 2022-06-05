@@ -106,7 +106,7 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 ```{r dendPlots, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
-Using Gower dist, we began clustering rating, genre, and month. The most interesting finding in the Full Hierarchial Clustering dendogram is the leftmost red cluster, which remains its own cluster far longer than the green and blue cluster. 
+The most interesting finding in the Full Hierarchial Clustering was the red cluster, which had a different clade than the green and blue. In examining the movies that made up this cluster, we found 
 
 
 
