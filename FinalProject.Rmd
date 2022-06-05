@@ -14,6 +14,7 @@ require(car)
 require(leaps)
 require(MASS)
 require(cluster)
+require(dendextend)
 ```
 
 ```{r, echo = FALSE}
@@ -371,16 +372,64 @@ movies_clust$month <- as.factor(movies_clust$month)
 
 gow_dist_full <- daisy(movies_clust, metric = "gower")
 gow_full_hclust <- hclust(gow_dist_full)
-plot(gow_full_hclust)
 cut_gow_full_hclust <- cutree(gow_full_hclust, k = 3)
+dend_full <- as.dendrogram(gow_full_hclust)
+dend_full <- color_branches(dend_full, k = 3)
+plot(dend_full, main = "Full Hierarchical Clustering")
 movies[cut_gow_full_hclust == 3, 1]
 
 gow_dist_intuitive <- daisy(movies_clust[c(1, 3, 5, 7, 8)], metric = "gower")
 gow_intuitive_hclust <- hclust(gow_dist_intuitive)
-plot(gow_intuitive_hclust)
-abline(h = 0.72, col = "red")
-cut_gow_int_hclust <- cutree(gow_int_hclust, k = 6)
+cut_gow_intuitive_hclust <- cutree(gow_intuitive_hclust, k = 6)
+dend_intuitive <- as.dendrogram(gow_intuitive_hclust)
+dend_intuitive <- color_branches(dend_intuitive, k = 6)
+plot(dend_intuitive, main = "Reduced Variable Hierarchical Clustering", sub = "Rating, Genre, Year, Score, and Budget")
+abline(h = 0.72, col = "darkblue")
 movies[cut_gow_int_hclust == 6, 1]
+```
+
+```{r}
+# ~~~~function~~~~
+means_by_cluster <- function(cut_hclust, df){
+  center_df <- as.data.frame(matrix(NA, nrow = (max(unique(cut_hclust)) + 1), ncol = dim(df)[2]))
+  colnames(center_df) <- names(df)
+  rownames(center_df) <- c(unique(cut_hclust), "Average Overall")
+  
+  # iterate through the clusters
+  for(i in 1:(max(unique(cut_hclust)) + 1)){
+    if(i == (max(unique(cut_hclust)) + 1)){
+      subset_df <- df
+    }else{
+      subset_df <- df[cut_hclust == i,]
+    }
+    
+    for(j in 1:dim(subset_df)[2]){
+      center <- NA
+      
+      if(is.numeric(subset_df[,j])){
+        # handle numeric
+        center <- round(mean(subset_df[,j]), digits = 2)
+        
+      }else{
+        # otherwise handle categorical
+        center <- names(tail(sort(table(subset_df[,j])), 1))
+        prop <- round(tail(sort(table(subset_df[,j])), 1) / length(subset_df[,j]),
+                      digits = 2)
+        
+        center <- paste(center, " ", "(", prop ,")", sep = "")
+      }
+      
+      center_df[i, j] <- center
+    }
+  }
+  
+  return(center_df)
+}
+
+# make into tables
+means_by_cluster(cut_gow_full_hclust, movies_clust)
+means_by_cluster(cut_gow_intuitive_hclust, movies_clust[c(1, 3, 5, 7, 8)])
+
 ```
 
 
