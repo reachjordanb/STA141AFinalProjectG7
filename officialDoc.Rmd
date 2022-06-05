@@ -45,12 +45,12 @@ See figure \@ref(fig:histBudget)
 # LEGACY
 knitr::include_graphics("plots/boxplotYearBudget.png")
 ```
-The mean year of high budget movies is 2000.333, while the mean score of high budget movies is 6.302996. For low budget movies, the mean year is 2009.117, while the mean score of low budget movies is 6.579835.
 
 ```{r scoreBudget, eval = FALSE, fig.cap='Boxplot of Score vs Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
 # LEGACY
 knitr::include_graphics("plots/boxplotScoreBudget.png")
 ```
+Based on the boxplots, we see that the mean year of high budget movies is 2009.117, while the mean score of high budget movies is 6.579835. For low budget movies, the mean year is 2000.333, while the mean score of low budget movies is 6.302996.
 
 ```{r bothBox, fig.cap='Boxplot of Year vs. Budget and Boxplot of Score vs. Budget', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='50%'}
 knitr::include_graphics(c("plots/boxplotYearBudget.png", "plots/boxplotScoreBudget.png"))
@@ -106,6 +106,7 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 ```{r dendPlots, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
+Using Gower dist, we began clustering rating, genre, and month. The most interesting finding in the Full Hierarchial Clustering dendogram is the leftmost red cluster, which remains its own cluster far longer than the green and blue cluster. 
 
 
 
