@@ -65,8 +65,6 @@ knitr::include_graphics("plots/scoreVotesCorr.png")
 
 ## Multiple Regression
 
-HELLO TRACY THIS IS HOW IT WORKS
-
 ```{r residuals1, eval = FALSE, fig.cap='Residual Plots for Initial Model', echo=FALSE,warning=FALSE,out.width='60%',out.height='70%'}
 # LEGACY
 knitr::include_graphics("plots/residuals1.png")
