@@ -385,7 +385,7 @@ dend_intuitive <- as.dendrogram(gow_intuitive_hclust)
 dend_intuitive <- color_branches(dend_intuitive, k = 6)
 plot(dend_intuitive, main = "Reduced Variable Hierarchical Clustering", sub = "Rating, Genre, Year, Score, and Budget")
 abline(h = 0.72, col = "darkblue")
-movies[cut_gow_int_hclust == 6, 1]
+movies[cut_gow_intuitive_hclust == 6, 1]
 ```
 
 ```{r}
