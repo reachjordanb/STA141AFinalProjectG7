@@ -6,6 +6,29 @@ output: bookdown::html_document2
 bibliography: references.bib
 ---
 ---
+```{css, echo =FALSE}
+
+h1.title {
+  font-size: 38px;
+  color: mediumslateblue;
+  text-align: center;
+}
+h4.author { 
+    font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: black;
+  text-align: center;
+}
+h4.date { 
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: black;
+  text-align: center;
+}
+</style>
+```
+```{r groupContributionsEmails, echo=FALSE,warning=FALSE,out.width='79%',out.height='65%'}
+knitr::include_graphics("plots/groupmembers.png")
 
 # <span style="color: mediumslateblue;">Introduction</span>
 
