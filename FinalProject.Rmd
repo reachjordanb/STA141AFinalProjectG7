@@ -88,6 +88,8 @@ for (i in 1:nrow(movies)){
   if(movies$rating[i] == "Not Rated")
     movies$rating[i] <- "Unrated"
 }
+
+movies_hold <- movies
 ```
 
 ```{r}
@@ -365,7 +367,7 @@ bptest(model6)
 
 ```{r}
 # Gower dist: https://arxiv.org/ftp/arxiv/papers/2101/2101.02481.pdf
-movies_clust <- movies[-1]
+movies_clust <- movies_hold[c(-1,-11)]
 movies_clust$rating <- as.factor(movies_clust$rating)
 movies_clust$genre <- as.factor(movies_clust$genre)
 movies_clust$month <- as.factor(movies_clust$month)
@@ -392,8 +394,8 @@ movies[cut_gow_intuitive_hclust == 6, 1]
 # ~~~~function~~~~
 means_by_cluster <- function(cut_hclust, df){
   # set up return object
-  center_df <- as.data.frame(matrix(NA, nrow = (max(unique(cut_hclust)) + 1), ncol = dim(df)[2]))
-  colnames(center_df) <- names(df)
+  center_df <- as.data.frame(matrix(NA, nrow = (max(unique(cut_hclust)) + 1), ncol = (dim(df)[2] + 1)))
+  colnames(center_df) <- c(names(df), "Total Values")
   rownames(center_df) <- c(unique(cut_hclust), "Average Overall")
   
   # iterate through the clusters and overall average
@@ -423,14 +425,16 @@ means_by_cluster <- function(cut_hclust, df){
       
       center_df[i, j] <- center
     }
+    
+    center_df[i, dim(center_df)[2]] <- dim(subset_df)[1]
   }
   
   return(center_df)
 }
 
 # make into tables
-means_by_cluster(cut_gow_full_hclust, movies_clust)
-means_by_cluster(cut_gow_intuitive_hclust, movies_clust[c(1, 3, 5, 7, 8)])
+knitr::kable(means_by_cluster(cut_gow_full_hclust, movies_clust))
+knitr::kable(means_by_cluster(cut_gow_intuitive_hclust, movies_clust[c(1, 3, 5, 7, 8)]))
 
 ```
 
