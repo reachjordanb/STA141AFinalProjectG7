@@ -151,6 +151,7 @@ What our model struggles to predict are these super-hit classic films that have 
 Our findings suggest these underrepresented qualities are important to the public's perception of films, but needless to say, they may be difficult measures to capture. Perhaps this is why they call it "movie magic!" 
 
 **Hierarchical Clustering:** 
+To see if there is a way to group movies with similar attributes together, we needed to perform hierarchial clustering. After overcoming our initial issue of clustering with categorical variables by using the Gower distance, we were able to create hierarchial clusterings for a full model and a reduced model. Using a function, we were able to analyze the mean and proportions of each variable that made up the clusters of each model to explore if the clusters were actually grouping movies with similar attributes together. Looking at the proportions in particular, we saw that the reduced model had particulary high proportion for rating in certain clusters, as well as in genre. This indicates that we were in fact able to group movies that contain similar attributes together based on these variables. 
 
 # <span style="color: mediumslateblue;">References</span>
 [WE NEED TO CITE CRAN]
