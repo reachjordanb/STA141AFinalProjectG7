@@ -196,10 +196,408 @@ email: trayu@ucdavis.edu
 
 # (APPENDIX) Code Appendix {-}
 
+## Libraries
+
+```{r,eval=FALSE}
+require(dplyr)
+require(ggplot2)
+require(GGally)
+require(lmtest)
+require(car)
+require(leaps)
+require(MASS)
+require(cluster)
+require(dendextend)
+require(readr)
+```
+
 ## Data Cleaning / Exploration
+
+```{r, eval=FALSE}
+movies_original <- read.csv("movies.csv")
+dim(movies_original)
+
+# Remove rows containing NA
+movies <- movies_original[rowSums(is.na(movies_original)) == 0,]
+
+# Create "month" using "released"
+# A factor 1:12, indicating month of release
+month <- numeric()
+
+for (i in 1:length(movies$released)){
+  if (grepl("January", movies$released[i])){
+    month[i] <- 1
+  }else if (grepl("February", movies$released[i])){
+    month[i] <- 2
+  }else if (grepl("March", movies$released[i])){
+    month[i] <- 3
+  }else if (grepl("April", movies$released[i])){
+    month[i] <- 4
+  }else if (grepl("May", movies$released[i])){
+    month[i] <- 5
+  }else if (grepl("June", movies$released[i])){
+    month[i] <- 6
+  }else if (grepl("July", movies$released[i])){
+    month[i] <- 7
+  }else if (grepl("August", movies$released[i])){
+    month[i] <- 8
+  }else if (grepl("September", movies$released[i])){
+    month[i] <- 9
+  }else if (grepl("October", movies$released[i])){
+    month[i] <- 10
+  }else if (grepl("November", movies$released[i])){
+    month[i] <- 11
+  }else{
+    month[i] <- 12
+  }
+}
+
+movies <- cbind(movies, month)
+movies$month <- as.factor(movies$month)
+
+# Here we can see almost 80% of the movies are from the US
+# Considering IMDb is a US-based database, isolate to the US only
+# sum(movies$country == "United States")/dim(movies)[1]
+movies <- movies[movies$country == "United States",]
+
+# remove variable we will not be using
+drops <- c("released","director","writer","star","company")
+movies <- movies[, !(names(movies) %in% drops)]
+rownames(movies) <- 1:nrow(movies)
+  
+# Reorganize columns
+organized <- c("name", "rating", "runtime", "genre", "month", "year", "votes", "score", "budget", "gross")
+movies <- movies[, organized]
+
+# Create variable for gross/budget
+return_prop <-  movies$gross / movies$budget
+movies <- cbind(movies, return_prop)
+
+# All movies with blank rating were rated R
+for (i in 1:nrow(movies)){
+  if(movies$rating[i] == "")
+    movies$rating[i] <- "R"
+}
+
+# Combine "Unrated" to "Not Rated" -> "Unrated"
+for (i in 1:nrow(movies)){
+  if(movies$rating[i] == "Not Rated")
+    movies$rating[i] <- "Unrated"
+}
+
+movies_hold <- movies
+
+#check for NAs
+movies_test <- movies_original[movies_original$country == "United States",]
+
+# number of NAs
+sum(rowSums(is.na(movies_test)) != 0)
+
+# count NAs by variable
+NAS_var <- colSums(is.na(movies_test))
+NAS_var <- NAS_var[NAS_var != 0]
+
+ggpairs(movies[,-1])
+
+hist(movies$budget, labels = TRUE,breaks = 18)
+#cut at bin before 1.0e+08
+mov_hist <- hist(movies$budget, labels = TRUE,breaks = 18)
+budget_cat <- character()
+for(i in 1:nrow(movies)){
+  if (movies$budget[i] > mov_hist$breaks[5]){
+    budget_cat[i] <- "high"
+  }else{
+    budget_cat[i] <- "low"
+  }
+}
+movies <- cbind(movies, budget_cat)
+movies$budget_cat <- as.factor(budget_cat)
+#calculate percentage of movies with high budget
+(159+78+65+67+44+40+9+7+9+3+2+1+1+1)/nrow(movies)
+# run average release year, check overall distribution of year
+mean(movies$year[movies$budget_cat == "low"])
+mean(movies$year[movies$budget_cat == "high"])
+# check average score between two groups (high budget/low budget)
+mean(movies$score[movies$budget_cat == "low"])
+mean(movies$score[movies$budget_cat == "high"])
+
+# ~~~~~ Responding to Q1 ~~~~~
+ggpairs(movies[c("score", "votes")])
+# From chart we see that the correlation is extremely significant. 
+var(movies$votes)
+# From above note extremely high variability
+movies_q1_1 <- movies[movies$votes >= 200000,]
+ggpairs(movies_q1_1[c("score", "votes")])
+
+mean(movies$score)
+
+mean_q1_2 <- movies[movies$votes <= 1000,]
+mean(mean_q1_2$score)
+mean_q1_3 <- movies[movies$votes >= 500000,]
+mean(mean_q1_3$score)
+
+# ~~~~~ Responding to Q2 ~~~~~
+length(unique(movies))
+```
 
 ## Regression
 
+```{r,eval=FALSE}
+# ~~~~~ MODEL 1 ~~~~~
+# fit model and summary output
+model1 <- lm(formula = score ~ rating + runtime + genre + month + year + votes + budget + gross + return_prop , data = movies)
+summary(model1)
+# residual analysis
+par(mfrow=c(2,2))
+plot(model1)
+par(mfrow=c(1,1))
+# Model Selection
+
+## Forward selection 
+model1_forward <- regsubsets(score ~ rating + runtime + genre + month + year + votes + budget + gross + return_prop, 
+                           data = movies, method = "forward")
+cbind(summary(model1_forward)$which, "adjusted r^2" = summary(model1_forward)$adjr2)
+
+## Backward selection 
+model1_backward <- regsubsets(score ~ rating + runtime + genre + month + year + votes + budget + gross + return_prop, 
+                           data = movies, method = "backward")
+cbind(summary(model1_backward)$which, "adjusted r^2" = summary(model1_backward)$adjr2)
+
+# ~~~~~ MODEL 2 ~~~~~~~~~
+# fit model and summary output
+model2 <- lm(formula = score ~ runtime + votes + budget, data = movies)
+summary(model2)
+# residual analysis
+par(mfrow=c(2,2))
+plot(model2)
+par(mfrow=c(1,1))
+# ~~~~ BoxCox Transformation ~~~~~~
+# Boxcox for model2
+boxcox(model2)
+
+# ~~~~~ MODEL 3 ~~~~~~~~~
+# square outcome variable (score)
+score_sq <- (movies$score)^2
+# fit model and summary output
+model3 <- lm(formula = score_sq ~ runtime + votes + budget, data = movies)
+summary(model3)
+# residual analysis
+plot(model3)
+
+# ~~~~~ MODEL 4 ~~~~~~~~~
+
+# create vector containing highest leverage points.
+# (Pulp Fiction, The Dark Knight, The Shawshank Redemption)
+highlev <- c(1148,2889,1147)
+movies[highlev,]
+
+# new dataframe without high leverage points
+movies_lowlev <- movies[-highlev,]
+rownames(movies_lowlev) <- 1:nrow(movies_lowlev)
+
+# have to remove same values in score_sq
+score_sq_ll <- score_sq[-highlev]
+
+# fit model and summary output
+model4 <- lm(formula = score_sq_ll ~ runtime + votes + budget, data = movies_lowlev)
+summary(model4)
+# residual analysis
+plot(model4)
+# high leverage
+hl_2 <- c(1741,1147,3149)
+movies_lowlev[hl_2,]
+# seems like the movies that keep throwing off the model are those that are "big hits" or "classics"
+
+# ~~~~~ MODEL 5 ~~~~~~~~~
+
+# new dataframe without high leverage points
+movies_lowlev2 <- movies_lowlev[-hl_2,]
+rownames(movies_lowlev2) <- 1:nrow(movies_lowlev2)
+
+# have to remove same values in score_sq_ll
+score_sq_ll2 <- score_sq_ll[-hl_2]
+
+# fit model and summary output
+model5 <- lm(formula = score_sq_ll2 ~ runtime + votes + budget, data = movies_lowlev2)
+summary(model5)
+# residual analysis
+plot(model5)
+# high leverage
+hl_3 <- c(3409,3668,1256)
+movies_lowlev2[hl_3,]
+
+boxcox(model5)
+
+# ~~~~~ MODEL 6 ~~~~~~~~~
+score_4th <- (score_sq_ll2)^2
+
+# fit model and summary output
+model6 <- lm(formula = score_4th ~ runtime + votes + budget, data = movies_lowlev2)
+summary(model6)
+# residual analysis
+plot(model6)
+
+# ~~~~~~~~ Residual Analysis: Formal Tests ~~~~~~~~
+
+# Shapiro-Wilk Test
+# test for normality
+# H0: data are normally distributed
+shapiro.test(resid(model6))
+# we reject the null, so the residuals are not normal
+
+# Box-Pierce Test
+# test for correlated errors
+# H0: The residuals are independently distributed
+Box.test(model6$residuals)
+# We reject the null, the residuals are independently distributed
+
+# Breusch-Pagan Test
+# test for homoskedasticity
+# H0: the errors are homoskedastic
+bptest(model6)
+# We reject the null, the residuals are heteroskedastic (non constant variance)
+```
+
 ## Cluster Analysis
 
+```{r,eval=FALSE}
+# Gower dist: https://arxiv.org/ftp/arxiv/papers/2101/2101.02481.pdf
+movies_clust <- movies_hold[c(-1,-11)]
+movies_clust$rating <- as.factor(movies_clust$rating)
+movies_clust$genre <- as.factor(movies_clust$genre)
+movies_clust$month <- as.factor(movies_clust$month)
+
+gow_dist_full <- daisy(movies_clust, metric = "gower")
+gow_full_hclust <- hclust(gow_dist_full)
+cut_gow_full_hclust <- cutree(gow_full_hclust, k = 3)
+dend_full <- as.dendrogram(gow_full_hclust)
+dend_full <- color_branches(dend_full, k = 3)
+plot(dend_full, main = "Full Hierarchical Clustering")
+movies[cut_gow_full_hclust == 3, 1]
+
+gow_dist_intuitive <- daisy(movies_clust[c(1, 3, 5, 7, 8)], metric = "gower")
+gow_intuitive_hclust <- hclust(gow_dist_intuitive)
+cut_gow_intuitive_hclust <- cutree(gow_intuitive_hclust, k = 6)
+dend_intuitive <- as.dendrogram(gow_intuitive_hclust)
+dend_intuitive <- color_branches(dend_intuitive, k = 6)
+plot(dend_intuitive, main = "Reduced Variable Hierarchical Clustering", sub = "Rating, Genre, Year, Score, and Budget")
+abline(h = 0.72, col = "darkblue")
+movies[cut_gow_intuitive_hclust == 6, 1]
+
+# ~~~~function~~~~
+means_by_cluster <- function(cut_hclust, df){
+  # set up return object
+  center_df <- as.data.frame(matrix(NA, nrow = (max(unique(cut_hclust)) + 1), ncol = (dim(df)[2] + 1)))
+  colnames(center_df) <- c(names(df), "Total Values")
+  rownames(center_df) <- c(unique(cut_hclust), "Average Overall")
+  
+  # iterate through the clusters and overall average
+  for(i in 1:(max(unique(cut_hclust)) + 1)){
+    if(i == (max(unique(cut_hclust)) + 1)){
+      subset_df <- df
+    }else{
+      subset_df <- df[cut_hclust == i,]
+    }
+    
+    # iterate through each column for measure of center
+    for(j in 1:dim(subset_df)[2]){
+      center <- NA
+      
+      if(is.numeric(subset_df[,j])){
+        # when numeric, use mean
+        center <- round(mean(subset_df[,j]), digits = 2)
+        
+      }else{
+        # when categorical, use most frequent value and give proportion of that value
+        center <- names(tail(sort(table(subset_df[,j])), 1))
+        prop <- round(tail(sort(table(subset_df[,j])), 1) / length(subset_df[,j]),
+                      digits = 2)
+        
+        center <- paste(center, " ", "(", prop ,")", sep = "")
+      }
+      
+      center_df[i, j] <- center
+    }
+    
+    center_df[i, dim(center_df)[2]] <- dim(subset_df)[1]
+  }
+  
+  return(center_df)
+}
+
+# make into tables
+knitr::kable(means_by_cluster(cut_gow_full_hclust, movies_clust))
+knitr::kable(means_by_cluster(cut_gow_intuitive_hclust, movies_clust[c(1, 3, 5, 7, 8)]))
+```
+
 ## Plots
+```{r,eval=FALSE}
+# import cleaned data
+moviesClean <- read_csv("moviesClean")
+
+# scale budget
+budget_scale <- moviesClean$budget / (10^6)
+
+# define histogram object for budget
+budg_hist <-  hist(budget_scale,
+                   col = 'lightblue',
+                   labels = TRUE,
+                   breaks = 18,
+                   main = "Frequency of Movies by Budget",
+                   xlab = "Budget (Millions of USD)")
+
+# define tick marks at bin deliniations
+ticks <- numeric()
+for (i in 1:length(budg_hist$breaks)){
+  ticks[i] <- budg_hist$breaks[i]
+}
+  
+
+# output histogram for budget
+hist(budget_scale,
+     col = 'lightblue',
+     labels = TRUE,
+     breaks = 18,
+     main = "Frequency of Movies by Budget",
+     xlab = "Budget (Millions of USD)",
+     xaxt = "n")
+axis(1, at = ticks)
+abline(v = budg_hist$breaks[5],
+       col = "red",
+       lwd=3,
+       lty = 2)
+text(x=50,y=1500,"Low Budget")
+text(x=50,y=1400,"88.76%")
+text(x=115,y=1500,"High Budget")
+text(x=115,y=1400,"11.24%")
+
+# boxplot for budget levels high and low with year
+boxplot(year ~ budget_cat, 
+        data = moviesClean, 
+        main = "Distribution of Year Released for High Budget and Low Budget Movies",
+        xlab = 'Budget',
+        ylab = 'Year Released',
+        col = c('coral2', 'cornflowerblue'),
+        horizontal = TRUE)
+legend("left", 
+       inset = 0.006,
+       cex = 1.5,
+       title = "Budget",
+       c("> $80 million", "< $80 million"),
+       fill = c('coral2', 'cornflowerblue'))
+
+# boxplot for budget levels high and low with score
+boxplot(score ~ budget_cat, 
+        data = moviesClean, 
+        main = "Distribution of IMDB Score for High Budget and Low Budget Movies",
+        xlab = 'Budget',
+        ylab = 'Score',
+        col = c('coral2', 'cornflowerblue'),
+        horizontal = TRUE)
+legend("left", 
+       inset = 0.006,
+       cex = 1.5,
+       title = "Budget",
+       c("> $80 million", "< $80 million"),
+       fill = c('coral2', 'cornflowerblue'))
+```
