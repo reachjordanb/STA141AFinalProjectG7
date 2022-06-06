@@ -61,7 +61,7 @@ It is also important to discuss the presence of NAs in this dataset. There were 
 ```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='60%',out.height='30%'}
 knitr::include_graphics("plots/histBudget.png")
 ```
-Based on the distribution of the Histogram of Budget in figure \@ref(fig:histBudget), we broke down `budget` into two levels: Movies with a budget greater than \$80,000,000 are categorized as “high” budget while those with a budget less than or equal to \$80,000,000 are categorized as “low” budget. These two levels are stored as a factor budget_cat.
+Based on the distribution of the Histogram of Budget in figure \@ref(fig:histBudget), we broke down `budget` into two levels: Movies with a budget greater than \$80,000,000 are categorized as “high” budget while those with a budget less than or equal to \$80,000,000 are categorized as “low” budget. These two levels are stored as a factor: `budget_cat`.
 
 ```{r yearBudget, eval = FALSE, fig.cap='Boxplot of Year vs Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
 # LEGACY
