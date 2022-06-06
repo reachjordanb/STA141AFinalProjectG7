@@ -61,10 +61,7 @@ It is also important to discuss the presence of NAs in this dataset. There were 
 ```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='60%',out.height='30%'}
 knitr::include_graphics("plots/histBudget.png")
 ```
-Based on the distribution of the histogram, we broke down `budget` into two levels: Movies with a budget greater than $80,000,000 are categorized as “high” budget while those with a budget less than or equal to $80,000,000 are categorized as “low” budget. These two levels are stored as a factor budget_cat.
-
-
-See figure \@ref(fig:histBudget)
+Based on the distribution of the Histogram of Budget in figure \@ref(fig:histBudget), we broke down `budget` into two levels: Movies with a budget greater than $80,000,000 are categorized as “high” budget while those with a budget less than or equal to $80,000,000 are categorized as “low” budget. These two levels are stored as a factor budget_cat.
 
 ```{r yearBudget, eval = FALSE, fig.cap='Boxplot of Year vs Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
 # LEGACY
@@ -75,17 +72,16 @@ knitr::include_graphics("plots/boxplotYearBudget.png")
 # LEGACY
 knitr::include_graphics("plots/boxplotScoreBudget.png")
 ```
-Based on the boxplots, we see that the mean year of high budget movies is 2009.117, while the mean score of high budget movies is 6.579835. For low budget movies, the mean year is 2000.333, while the mean score of low budget movies is 6.302996.
+The distribution for the Boxplot of Year vs Budget in figure \@ref(fig:yearBudget)shows that the low budget distribution spans a much longer timespan than high budget movies. The mean year of high budget movies is 2009.117, while the mean year for low budget movies is 2000.333. In looking at the Boxplot of Score vs Budget in figure \@ref(fig:scoreBudget), we see that the span of distribution is more similar between high and low budget movies, however, the low budget boxplot had far more outliers on the lower end. The mean scores were also more similar between the boxplots, with high budget movies having an average score of 6.579835 and low budget movies having a score of 6.302996. 
 
 ```{r bothBox, fig.cap='Boxplot of Year vs. Budget and Boxplot of Score vs. Budget', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='50%'}
 knitr::include_graphics(c("plots/boxplotYearBudget.png", "plots/boxplotScoreBudget.png"))
 ```
 
-see figure \@ref(fig:bothBox)
-
 ```{r scoreVotesCorr, fig.cap='Correlation matrix of Score and Votes', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='50%',out.height='50%'}
 knitr::include_graphics("plots/scoreVotesCorr.png")
 ```
+Looking at the correlation between scores and votes in figure \@ref(fig:scoreVotesCorr), we see that the variables have a positive relationship with a correlation coefficient of 0.492 and a normal looking distribution.
 
 **Responding to Comment #1:** We explored the relationship between the number of votes and IMDB score, and ultimately decided to consider movies with all numbers of votes in our predictive model. This is because `votes` does end up being a good indicator of how well received a movie is. Generally, movies with low numbers of votes also have lower scores. Our film with the lowest value for `votes` has $195$ votes and a score of $3.5$. The two movies with the highest values for votes have $2,400,000$ votes and scores of $9.3$ and $9.0$. The mean score for movies with $1,000$ votes or less is $5.3$, while the mean score for movies with at least $500,000$ votes is $7.8$. Votes ended up being one of the most significant predictors in the multiple regression (see Methods/Results), which follows the intuition that if a movie is well-received it will, in general, be part of the public discussion (i.e. voted on).
 
