@@ -132,7 +132,7 @@ To answer our second research question, we implemented hierarchical clustering m
 
 The gower.dist function computes the Gower's distance (dissimilarity) between units in a dataset or between observations in two distinct datasets. It is useful in cases where records contain combinations of logical, numerical, categorical or text data. 
 
-We removed variables as an exploration to give us a clustering we believed would be intuitive to compare to the full model. The Full Hierarchial Clustering in figure \@ref(fig:dendPlots) (RIGHT) is the full model with all the variable and the Reduced Variable clustering in figure 5.2 (lEFT) only hasthe variables rating, genre, year, score, and budget. The Reduced Variable Hierarchial Clustering ended up with 6 clades, while the Full Clustering had 3. 
+We removed variables as an exploration to give us a clustering we believed would be intuitive to compare to the full model. The Full Hierarchial Clustering in figure \@ref(fig:dendPlots) (RIGHT) is the full model with all the variable and the Reduced Variable clustering in figure \@ref(fig:dendPlots) (LEFT) only hasthe variables rating, genre, year, score, and budget. The Reduced Variable Hierarchial Clustering ended up with 6 clades, while the Full Clustering had 3. 
 
 ```{r dendPlots, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
