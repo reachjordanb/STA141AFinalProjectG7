@@ -38,7 +38,7 @@ It is undeniable that movies and films are one of the most beloved forms of ente
 
 # <span style="color: mediumslateblue;">Data Description</span>
 
-The data set we set out to investigate was found on Kaggle: . Originally, the data was scraped from the online movie review and informational website IMDB. There are 7668 movies in the data set from the years 1980 to 2020. Since IMDb are a US-based metric, we decided to eliminate the movies that were not created in the United States in order to hopefully gain a clearer insight into our nation's domestic movie industry. We also decided to remove any rows that contained any NA values. In total, we examined 4325 movies after cleaning the data. See Figure \@ref(fig:dataTable)
+The data set we set out to investigate was found on Kaggle [@kaggle]: . Originally, the data was scraped from the online movie review and informational website IMDB. There are 7668 movies in the data set from the years 1980 to 2020. Since IMDb are a US-based metric, we decided to eliminate the movies that were not created in the United States in order to hopefully gain a clearer insight into our nation's domestic movie industry. We also decided to remove any rows that contained any NA values. In total, we examined 4325 movies after cleaning the data. See Figure \@ref(fig:dataTable)
 
 The original dataset as pulled from Kaggle contained 15 variables. Ultimately we removed four of them in our cleaning process (`director`, `writer`, `star`, and `company`) and added two of our own (`budget_cat` and `return_prop`). The justification for removing those four variables is described below ("Responding to Comment #2"). Regarding `budget_cat` see Figure \@ref(fig:histBudget) for more detail. Also, we converted a variable in the original data set called `released` which included exact date of release and country of release into just the `month` to see if month was a significant predictor, considering that country of origin had been reduced to the us and `year` was already a variable by itself.
 
@@ -169,9 +169,6 @@ We created a function to analyze the mean and proportions of each variable that 
 In the Full Hierarchical Clustering model, after returning the list of movies in the red cluster, we can see the movie titles included: Iron Man, Spider-Man: Homecoming, and Wonder Woman. These movies definitely have similarities and would definitely be recommended if any movie was selected first and does correlate with the means and proportions we gathered from our function. However, despite the proportions for variables being higher in the Reduced Variable Hierarchical Clustering model, the movie title list returned from the first cluster has much more variability, for example "The Proposal", a romantic comedy, is being recommended in the same category as "The Twilight Saga: Eclipse", a fantasy movie. This suggests that aside from the "action blockbusters" category that was investigated above, our full model had too much noise to be very effective at establishing meaningful clusters.
 
 # <span style="color: mediumslateblue;">References</span> {#bib}
-[WE NEED TO CITE CRAN]
-[WE NEED TO CITE KAGGLE FOR DATASET]
-[WE NEED TO CITE ANYTHING THAT Y'ALL REFERENCED TBH]
 
 <div id="refs"></div>
 
@@ -181,7 +178,7 @@ In the Full Hierarchical Clustering model, after returning the list of movies in
 
 email: rtadams@ucdavis.edu
 
-**Jordan Bowman:** Jordan was a main collaborator in the overall planning and conceptual direction of the study. He contributed to data cleaning, and data exploration, including collaborating on the code written. He produced figures \@ref(fig:scoreVotesCorr) and \@ref(fig:dendPlots) and took the lead on implementation of Section  \@ref(ca), (writing all the code involved, including the `means_by_cluster()` function) and "Responding to comment #2" in Section \@ref(dv) . 
+**Jordan Bowman:** Jordan was a main collaborator in the overall planning and conceptual direction of the study. He contributed to data cleaning, and data exploration, including collaborating on the code written. He produced figures \@ref(fig:scoreVotesCorr) and \@ref(fig:dendPlots) and took the lead on implementation of Section  \@ref(ca), (writing all the code involved, including the `means_by_cluster()` function) and "Responding to comment #2" in Section \@ref(dv) .
 
 email: jorbowman@ucdavis.edu
 
