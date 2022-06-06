@@ -56,7 +56,7 @@ It is also important to discuss the presence of NAs in this dataset. There were 
 
 2. How can we group movies together that contain similar attributes so that we can recommend similar movies to others?
 
-# <span style="color: mediumslateblue;">Data Visualization</span>
+# <span style="color: mediumslateblue;">Data Visualization</span> {#dv}
 
 ```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='60%',out.height='30%'}
 knitr::include_graphics("plots/histBudget.png")
@@ -88,7 +88,7 @@ Looking at the correlation between scores and votes in figure \@ref(fig:scoreVot
 
 # <span style="color: mediumslateblue;">Methods and Results</span>
 
-## <span style="color: mediumslateblue;">Multiple Regression</span>
+## <span style="color: mediumslateblue;">Multiple Regression</span> {#mr}
 
 To answer our first research question, we implemented a multiple regression linear model to determine if any of the variables in our data set are viable predictors of `score`. We fitted an initial model (named model1) that regressed score on all of the variables depicted in figure \@ref(fig:dataTable) , except for the variable `budget_cat`, which was only created for data exploration purposes. After running the model and analyzing the t-test results via the `summary()` function, we found that while some levels of the variable categorical `genre` are deemed significant predictors of `score` (e.g. `drama`, `animation`), the majority have very high p-values and are not deemed significant predictors (e.g. `thriller`, `mystery`). `Month` is not a significant predictor, nor `gross`, nor `return_prop`.
 
@@ -121,7 +121,7 @@ knitr::include_graphics("plots/residualsFinal.png")
 knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 ```
 
-## <span style="color: mediumslateblue;">Cluster Analysis</span>
+## <span style="color: mediumslateblue;">Cluster Analysis</span> {#ca}
 
 
 To investigate our second research question, we implemented hierarchical clustering methods to group movies together that contain similar attributes so that we can recommend similar movies. This data set contains a large number of categorical variables `rating`, `genre`, and `month` that might be relevant to the aggregation of movies that are alike. As these values are categorical values, a Euclidean distance is not suitable for evaluating the degree of similarity between observations. As a result, we relied on a different distance measure to achieve this classification, known as Gower distance. 
@@ -152,7 +152,7 @@ The most interesting finding within the full cluster analysis is the significant
 
 The second cluster analysis on reduced variables resulted in six clusters of far more meaningful differences on a consumer level. In a similar way to the "action blockbuster" films described in the previous paragraph, many of the clusters aggregated in a way that can be defined as a phrase to a prospective consumer. Cluster 5 in Figure \@ref(fig:reducedhclustMeans (light blue in the Reduced Variable Dendrogram) for instance contains almost entirely animated films for children which included Disney movies such as "The Lion King" and "Mulan."
 
-# <span style="color: mediumslateblue;">Discussion and Conclusion</span>
+# <span style="color: mediumslateblue;">Discussion and Conclusion</span> {#dc}
 
 **Multiple Regression:**
 One of the main issues we encountered with every multiple regression model were the high-leverage points. Upon closer inspection of the films that constituted the high-leverage points, we gained some insight into the predictive capabilities of the data set. The movies in the data set with high leverage included: Pulp Fiction, The Dark Knight, The Shawshank Redemption, The Matrix, Forrest Gump, and Inception. Even those who are not avid movie enthusiasts should recognize some of (if not all) the iconic films within this list. 
@@ -168,17 +168,28 @@ We created a function to analyze the mean and proportions of each variable that 
 
 In the Full Hierarchical Clustering model, after returning the list of movies in the red cluster, we can see the movie titles included: Iron Man, Spider-Man: Homecoming, and Wonder Woman. These movies definitely have similarities and would definitely be recommended if any movie was selected first and does correlate with the means and proportions we gathered from our function. However, despite the proportions for variables being higher in the Reduced Variable Hierarchical Clustering model, the movie title list returned from the first cluster has much more variability, for example "The Proposal", a romantic comedy, is being recommended in the same category as "The Twilight Saga: Eclipse", a fantasy movie. This suggests that aside from the "action blockbusters" category that was investigated above, our full model had too much noise to be very effective at establishing meaningful clusters.
 
-# <span style="color: mediumslateblue;">References</span>
+# <span style="color: mediumslateblue;">References</span> {#bib}
 [WE NEED TO CITE CRAN]
 [WE NEED TO CITE KAGGLE FOR DATASET]
 [WE NEED TO CITE ANYTHING THAT Y'ALL REFERENCED TBH]
 
 <div id="refs"></div>
 
-# (APPENDIX) Code Appendix {-}
-## Data Cleaning
+# Author Contributions
 
-## Exploration
+**Riley Adams:** Riley was a main collaborator in the overall planning and conceptual direction of the study. He contributed to data exploration, and data cleaning, including collaborating on the code written. H produced figures \@ref(fig:histBudget) , \@ref(fig:bothBox), \@ref(fig:scoreVotesCorr) , and \@ref(fig:residualsPlots) . He also took the lead on implementation of the Section \@ref(mr), writing all the code involved. He also was the main contributor for the write up of Section \@ref(mr) as well as the "multiple regression" portion of Section \@ref(dc) and "Responding to comment #1" in Section \@ref(dv) . He also implemented the formatting and production of final document through the "bookdown" library in the R programming language, and creation Section \@ref(bib). 
+
+**Jordan Bowman:** Jordan was a main collaborator in the overall planning and conceptual direction of the study. He contributed to data cleaning, and data exploration, including collaborating on the code written. He produced figures \@ref(fig:scoreVotesCorr) and \@ref(fig:dendPlots) and took the lead on implementation of Section  \@ref(ca), (writing all the code involved, including the `means_by_cluster()` function) and "Responding to comment #2" in Section \@ref(dv) . 
+
+**Ruqayyah Siddique:**
+
+**Constanza Widel:**
+
+**Tracy Yu:** Tracy contributed in the editing of the final document. She collaborated to produce a final draft for section \@ref(mr) and the "multiple regression" portion of Section \@ref(dc)
+
+# (APPENDIX) Code Appendix {-}
+
+## Data Cleaning / Exploration
 
 ## Regression
 
