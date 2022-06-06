@@ -129,7 +129,7 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 
 To answer our second research question, we implemented hierarchical clustering methods to group movies together that contain similar attributes so that we can recommend similar movies. This data set contains a large number of categorical variables `rating`, `genre`, and `month` that might be relevant to the aggregation of movies that are alike. As these values are categorical values, a Euclidean distance is not suitable for evaluating the degree of similiarity between observations. As a result, we relied on a different distance measure to achieve this classification, known as Gower distance. 
 
-The gower.dist function computes the Gower's distance (dissimilarity) between units in a dataset or between observations in two distinct datasets. It is useful in cases where records contain combinations of logical, numerical, categorical or text data.[@cluster]
+The gower.dist function computes the Gower's distance (dissimilarity) between units in a dataset or between observations in two distinct datasets. It is useful in cases where records contain combinations of logical, numerical, categorical or text data. [@cluster]
 
 We removed variables as an exploration to give us a clustering we believed would be intuitive to compare to the full model. The Full Hierarchial Clustering in figure \@ref(fig:dendPlots) (RIGHT) is the full model with all the variable and the Reduced Variable clustering in figure \@ref(fig:dendPlots) (LEFT) only hasthe variables `rating`, `genre`, `year`, `score`, and `budget`. The Reduced Variable Hierarchial Clustering ended up with 6 clades, while the Full Clustering had 3. 
 
