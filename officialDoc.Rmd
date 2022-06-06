@@ -119,27 +119,27 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 ## <span style="color: mediumslateblue;">Cluster Analysis</span>
 
 
-To answer our second research question, we implemented hierarchical clustering methods to group movies together that contain similar attributes so that we can recommend similar movies. This data set contains a large number of categorical variables `rating`, `genre`, and `month` that might be relevant to the aggregation of movies that are alike. As these values are categorical values, a Euclidean distance is not suitable for evaluating the degree of similiarity between observations. As a result, we relied on a different distance measure to achieve this classification, known as Gower distance. 
+To answer our second research question, we implemented hierarchial clustering methods to group movies together that contain similar attributes so that we can recommend similar movies. This data set contains a large number of categorical variables `rating`, `genre`, and `month` that might be relevant to the aggregation of movies that are alike. As these values are categorical values, a Euclidean distance is not suitable for evaluating the degree of similiarity between observations. As a result, we relied on a different distance measure to achieve this classification, known as Gower distance. 
 
 The gower.dist function computes the Gower's distance (dissimilarity) between units in a dataset or between observations in two distinct datasets. It is useful in cases where records contain combinations of logical, numerical, categorical or text data. [@cluster]
 
 We removed variables as an exploration to give us a clustering we believed would be intuitive to compare to the full model. The Full Hierarchial Clustering in figure \@ref(fig:dendPlots) (RIGHT) is the full model with all the variable and the Reduced Variable clustering in figure \@ref(fig:dendPlots) (LEFT) only hasthe variables `rating`, `genre`, `year`, `score`, and `budget`. The Reduced Variable Hierarchial Clustering ended up with 6 clades, while the Full Clustering had 3. 
 
-```{r dendPlots, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
+```{r dendPlots, fig.cap='Colored dendrogram plots of full and reduced variable hierarchial clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
-The most interesting finding was the difference between the red clusterings of both dendrogram plots. Cutting and returning the list of movies in the first clusters of both dendrogrmas allows us to view the titles of the movies in those clusters. By doing this we are able to visually see the groupings by movie name and inference how they may be clustered differently based on which variables are included in the model. To further explore where this differece may be coming from, we used a function to find the mean and proportion of each variable in each cluster of the Full Hierarchial Clustering model and the Reduced Variables Hierarchial Clustering model:
+The most interesting finding was the difference between the red clusterings of both dendrogram plots. Cutting and returning the list of movies in the first clusters of both dendrogrmas allows us to view the titles of the movies in those clusters. By doing this we are able to visually see the groupings by movie name and inference how they may be clustered differently based on which variables are included in the model. To further explore where this differece may be coming from, we created a function that returned a table with the means and proportions of each variable in each cluster of the Full Hierarchial Clustering model and the Reduced Variables Hierarchial Clustering model.
 
-```{r fullhclustMeans, fig.cap='Mean and Proportions of Full Hierarchical Clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='89%',out.height='65%'}
+The variables that both clusters share (`rating`, `genre`, `year`, `score`, and `budget`) had the same average overall means and proportions, which indicates that the data isn't being changed based on how it is clustered. 
+In comparing the first cluster from each table, we see that the mean for `rating` and `genre` are the same, although the proportions are different. The Reduced Variable clustering from figure \@ref(fig:reducedhclustMeans) has a 0.99 proportion for `rating`, which means 99% of the movies in that clustering share the same rating of R. Clusters 2 thrugh 6 in the Reduced Variable clustering also have relatively high proportions for `rating`. The `genre` variable has proportions slighly varied, where some clusters have a lower proportion like 0.32 and other clusters have a proportion of 1, which means all the movies in that cluster have the same genre. The `year` and `scores` are slightly different, however the biggest difference was in the variable `budget`, which was much higher for the Reduced Variable clustering. 
+Looking at the Full clustering table from figure \@ref(fig:reducedhclustMeans), we see that the mean of `year`, `votes`, and `budget` increase between cluster 1 to cluster 3, whereas in the Reduced Variable clustering table, we do not see this same pattern in those variables between clusters 1 to 6.
+
+```{r fullhclustMeans, fig.cap='Mean and Proportions of Full Hierarchial Clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='89%',out.height='65%'}
 knitr::include_graphics("plots/full_hclust_means.png")
 ```
-```{r reducedhclustMeans, fig.cap='Mean and Proportions of Reduced Hierarchical Clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
+```{r reducedhclustMeans, fig.cap='Mean and Proportions of Reduced Hierarchial Clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics("plots/reduced_hclust_means.png")
-```
-
-The variables that both clusters share (`rating`, `genre`, `year`, `score`, and `budget`) had the same average overall mean and proportion, which indicates that the data isn't being changed based on how it is clustered. 
-In comparing the first cluster from each table, we see that the mean for `rating` and `genre` are the same, although the proportions are different. The Reduced Variable clustering from figure \@ref(fig:reducedhclustMeans) has a 0.99 proportion for `rating`, which means 99% of the movies in that clustering share the same rating of R. Clusters 2 thrugh 6 in the Reduced Variable clustering also have relatively high proportions for `rating`. Therefore, the movies are being recommended according to rating pretty well. The `genre` variable has proportions slighly varied, where some clusters have a lower proportion like 0.32 and other clusters have a proportion of 1, which means all the movies in that cluster have the same genre. The `year` and `scores` are slightly different, however the biggest difference was in the variable `budget`, which was much higher for the Reduced Variable clustering. 
-Looking at the Full clustering table from figure \@ref(fig:reducedhclustMeans), we see that the mean of `year`, `votes`, and `budget` increase between cluster 1 to cluster 3, whereas in the Reduced Variable clustering table, we do not see this same pattern in those variables between clusters 1 to 6. 
+``` 
 
 # <span style="color: mediumslateblue;">Discussion and Conclusion</span>
 
@@ -150,8 +150,12 @@ What our model struggles to predict are these super-hit classic films that have 
 
 Our findings suggest these underrepresented qualities are important to the public's perception of films, but needless to say, they may be difficult measures to capture. Perhaps this is why they call it "movie magic!" 
 
-**Hierarchical Clustering:** 
-To see if there is a way to group movies with similar attributes together, we needed to perform hierarchial clustering. After overcoming our initial issue of clustering with categorical variables by using the Gower distance, we were able to create hierarchial clusterings for a full model and a reduced model. Using a function, we were able to analyze the mean and proportions of each variable that made up the clusters of each model to explore if the clusters were actually grouping movies with similar attributes together. Looking at the proportions in particular, we saw that the reduced model had particulary high proportion for rating in certain clusters, as well as in genre. This indicates that we were in fact able to group movies that contain similar attributes together based on these variables. 
+**Hierarchial Clustering:** 
+To see if there is a way to group movies with similar attributes together we needed to perform hierarchial clustering using the gower.dist function. Our initial issue was attempting to use Euclidean distance to create the clusterings. This proved diffuclut due to the categorical variables. Using the Gower distance function we were able to work around this and create hierarchial clusterings for a full variable model and a reduced variable model. 
+
+We created a function to analyze the mean and proportions of each variable that made up the clusters of each model to explore if the clusters were actually grouping movies with similar attributes together. Looking at the proportions in particular, we saw that the reduced model had particulary high proportions for `rating` in certain clusters, as well as in `genre`. 
+
+In the Full Hierarchial Clustering model, after returning the list of movies in the first cluster, we can see the movie titles included: Iron Man, Spider-Man: Homecoming, Wonder Woman. These movies definitely have simialrities and would definitely be recommended if any movie was selected first and does correlate with the means and proportions we gathered from our function. However, despite the proportions for variables being higher in the Reduced Variable Hierarchial Clustering model, the movie title list returned from the first cluster has much more variability, for example "The Proposal", a romantic comedy, is being recommended in the same category as "The Twilight Saga: Eclipse", a fantasy movie. 
 
 # <span style="color: mediumslateblue;">References</span>
 [WE NEED TO CITE CRAN]
