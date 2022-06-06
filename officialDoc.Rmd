@@ -106,6 +106,7 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 This data set contains a large number of categorical variables `rating`, `genre`, and `month` that might be relevant to the aggregation of similar movies. As these values are categorical values, a Euclidean distance is not suitable for evaluating the degree of similiarity between observations. As a result, we relied on a different distance measure to achieve this: Gower distance.
 
 [DESCRIBE GOWER DIST]
+The gower.dist function computes the Gower's distance (dissimilarity) between units in a dataset or between observations in two distinct datasets. IT is useful in cases where records contain combinations of logical, numerical, categorical or text data.
 
 ```{r dendPlots, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
