@@ -27,8 +27,10 @@ h4.date {
 }
 </style>
 ```
+
 ```{r groupContributionsEmails, echo=FALSE,warning=FALSE,out.width='79%',out.height='65%'}
 knitr::include_graphics("plots/groupmembers.png")
+```
 
 # <span style="color: mediumslateblue;">Introduction</span>
 
