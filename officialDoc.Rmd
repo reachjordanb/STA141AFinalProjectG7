@@ -61,7 +61,7 @@ It is also important to discuss the presence of NAs in this dataset. There were 
 ```{r histBudget, fig.cap='Histogram of Budget (red dashed line represents division between "low" and "high" budget films)', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='60%',out.height='30%'}
 knitr::include_graphics("plots/histBudget.png")
 ```
-Based on the distribution of the Histogram of Budget in figure \@ref(fig:histBudget), we broke down `budget` into two levels: Movies with a budget greater than $80,000,000 are categorized as “high” budget while those with a budget less than or equal to $80,000,000 are categorized as “low” budget. These two levels are stored as a factor budget_cat.
+Based on the distribution of the Histogram of Budget in figure \@ref(fig:histBudget), we broke down `budget` into two levels: Movies with a budget greater than \$80,000,000 are categorized as “high” budget while those with a budget less than or equal to \$80,000,000 are categorized as “low” budget. These two levels are stored as a factor budget_cat.
 
 ```{r yearBudget, eval = FALSE, fig.cap='Boxplot of Year vs Budget', echo=FALSE,warning=FALSE,out.width='100%',out.height='50%'}
 # LEGACY
@@ -72,7 +72,7 @@ knitr::include_graphics("plots/boxplotYearBudget.png")
 # LEGACY
 knitr::include_graphics("plots/boxplotScoreBudget.png")
 ```
-The distribution for the Boxplot of Year vs Budget in figure \@ref(fig:yearBudget)shows that the low budget distribution spans a much longer timespan than high budget movies. The mean year of high budget movies is 2009.117, while the mean year for low budget movies is 2000.333. In looking at the Boxplot of Score vs Budget in figure \@ref(fig:scoreBudget), we see that the span of distribution is more similar between high and low budget movies, however, the low budget boxplot had far more outliers on the lower end. The mean scores were also more similar between the boxplots, with high budget movies having an average score of 6.579835 and low budget movies having a score of 6.302996. 
+The distribution for the Boxplot of Year vs Budget in figure \@ref(fig:yearBudget) shows that the low budget distribution spans a much longer timespan than high budget movies. The mean year of high budget movies is 2009.117, while the mean year for low budget movies is 2000.333. In looking at the Boxplot of Score vs Budget in figure \@ref(fig:scoreBudget) , we see that the span of distribution is more similar between high and low budget movies, however, the low budget boxplot had far more outliers on the lower end. The mean scores were also more similar between the boxplots, with high budget movies having an average score of 6.579835 and low budget movies having a score of 6.302996. 
 
 ```{r scoreVotesCorr, fig.cap='Correlation matrix of Score and Votes', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='50%',out.height='50%'}
 knitr::include_graphics("plots/scoreVotesCorr.png")
