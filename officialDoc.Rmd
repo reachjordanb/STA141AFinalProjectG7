@@ -112,7 +112,7 @@ The gower.dist function computes the Gower's distance (dissimilarity) between un
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
 
-We removed variables in an exploration to give us a clustering we believed would be intuitive to compare to the full model. This left the Reduced Variable clustering with the variables rating, genre, year, score, and budget. The most interesting finding was the red cluster of the Full Hierarchial Clustering, which had a different clustering than the green and blue. The Reduced Variable Hierarchial Clustering ended up with 6 clades, while the Full Clustering had 3.
+We removed variables as an exploration to give us a clustering we believed would be intuitive to compare to the full model. This left the Reduced Variable clustering with the variables rating, genre, year, score, and budget. The most interesting finding was the red cluster of the Full Hierarchial Clustering, which had a different clustering than the green and blue. The Reduced Variable Hierarchial Clustering ended up with 6 clades, while the Full Clustering had 3.
 Looking at the movies in the first cluster of both models, ---add movies 
 
 
@@ -127,7 +127,7 @@ knitr::include_graphics("plots/reduced_hclust_means.png")
 
 The variables that both clusters share (rating, genre, year, score, and budget) had the same overall mean and proportion, which indicates that the data isn't being changed based on how it is clustered. 
 In comparing the first cluster of each, we see that the mean rating and genre are the same, although the proportions are different. The Reduced Variable clustering had a higher proportion of rating and lower proportion of genre. The year and scores are slightly different, however, the biggest difference was in the variable budget, which was much higher for the Reduced Variable clustering. 
-Looking at the Full clustering table, we that the mean year and votes increase between cluster 1 to cluster 3, whereas in the Reduced Variable clustering table, we do not see this same pattern between those variables. 
+Looking at the Full clustering table, we that the mean year, votes, and budget increase between cluster 1 to cluster 3, whereas in the Reduced Variable clustering table, we do not see this same pattern in those variables between clusters 1 to 6. 
 
 # <span style="color: mediumslateblue;">Discussion and Conclusion</span>
 
