@@ -28,7 +28,7 @@ h4.date {
 </style>
 ```
 
-```{r groupContributionsEmails, echo=FALSE,warning=FALSE,out.width='79%',out.height='65%'}
+```{r groupContributionsEmails, CENTER, echo=FALSE,warning=FALSE,out.width='79%',out.height='65%'}
 knitr::include_graphics("plots/groupmembers.png")
 ```
 
@@ -128,31 +128,27 @@ knitr::include_graphics(c("plots/residuals1.png", "plots/residualsFinal.png"))
 
 [Example of how to cite the paper we used: @cluster . Notice, once it has been referenced in the paper, it is automatically added to our bibliography.]
 
-This data set contains a large number of categorical variables `rating`, `genre`, and `month` that might be relevant to the aggregation of similar movies. As these values are categorical values, a Euclidean distance is not suitable for evaluating the degree of similiarity between observations. As a result, we relied on a different distance measure to achieve this: Gower distance.
+To answer our second research question, we implemented hierarchical clustering methods to group movies together that contain similar attributes so that we can recommend similar movies. This data set contains a large number of categorical variables `rating`, `genre`, and `month` that might be relevant to the aggregation of movies that are alike. As these values are categorical values, a Euclidean distance is not suitable for evaluating the degree of similiarity between observations. As a result, we relied on a different distance measure to achieve this classification, known as Gower distance. 
 
-[DESCRIBE GOWER DIST]
-The gower.dist function computes the Gower's distance (dissimilarity) between units in a dataset or between observations in two distinct datasets. IT is useful in cases where records contain combinations of logical, numerical, categorical or text data.
+The gower.dist function computes the Gower's distance (dissimilarity) between units in a dataset or between observations in two distinct datasets. It is useful in cases where records contain combinations of logical, numerical, categorical or text data. 
+
+We removed variables as an exploration to give us a clustering we believed would be intuitive to compare to the full model. The Full Hierarchial Clustering in figure 5.2 (RIGHT) is the full model with all the variable and the Reduced Variable clustering in figure 5.2 (lEFT) only hasthe variables rating, genre, year, score, and budget. The Reduced Variable Hierarchial Clustering ended up with 6 clades, while the Full Clustering had 3. 
 
 ```{r dendPlots, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics(c("plots/dend1.png", "plots/dend2.png"))
 ```
+The most interesting finding was the difference between the red clusterings of both dendrogram plots. Cutting and returning the list of movies in the first clusters of both dendrogrmas allows us to view the titles of the movies in those clusters. By doing this we are able to visually see the groupings by movie name and inference how they may be clustered differently based on which variables are included in the model. To further explore where this differece may be coming from, we used a function to find the mean and proportion of each variable in each cluster of the Full Hierarchial Clustering model and the Reduced Variables Hierarchial Clustering model:
 
-We removed variables as an exploration to give us a clustering we believed would be intuitive to compare to the full model. This left the Reduced Variable clustering with the variables rating, genre, year, score, and budget. The most interesting finding was the red cluster of the Full Hierarchial Clustering, which had a different clustering than the green and blue. The Reduced Variable Hierarchial Clustering ended up with 6 clades, while the Full Clustering had 3.
-Looking at the movies in the first cluster of both models, ---add movies 
-
-
-We used a function to find the mean and proportion of each variable in each cluster of the Full Hierarchial Clustering model and the Reduced Variables Hierarchial Clustering model:
-
-```{r fullhclustMeans, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='89%',out.height='65%'}
+```{r fullhclustMeans, fig.cap='Mean and Proportions of Full Hierarchical Clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='89%',out.height='65%'}
 knitr::include_graphics("plots/full_hclust_means.png")
 ```
-```{r reducedhclustMeans, fig.cap='Colored dendrogram plots of full and reduced variable hierarchical clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
+```{r reducedhclustMeans, fig.cap='Mean and Proportions of Reducaed Hierarchical Clustering', fig.show = 'hold', fig.align = 'center', echo=FALSE,warning=FALSE,out.width='49%',out.height='65%'}
 knitr::include_graphics("plots/reduced_hclust_means.png")
 ```
 
-The variables that both clusters share (rating, genre, year, score, and budget) had the same overall mean and proportion, which indicates that the data isn't being changed based on how it is clustered. 
-In comparing the first cluster of each, we see that the mean rating and genre are the same, although the proportions are different. The Reduced Variable clustering had a higher proportion of rating and lower proportion of genre. The year and scores are slightly different, however, the biggest difference was in the variable budget, which was much higher for the Reduced Variable clustering. 
-Looking at the Full clustering table, we that the mean year, votes, and budget increase between cluster 1 to cluster 3, whereas in the Reduced Variable clustering table, we do not see this same pattern in those variables between clusters 1 to 6. 
+The variables that both clusters share (rating, genre, year, score, and budget) had the same average overall mean and proportion, which indicates that the data isn't being changed based on how it is clustered. 
+In comparing the first cluster from each table, we see that the mean rating and genre are the same, although the proportions are different. The Reduced Variable clustering from figure 5.3 had a higher proportion of rating and lower proportion of genre. The year and scores are slightly different, however, the biggest difference was in the variable budget, which was much higher for the Reduced Variable clustering. 
+Looking at the Full clustering table from figure 5.4, we that the mean year, votes, and budget increase between cluster 1 to cluster 3, whereas in the Reduced Variable clustering table, we do not see this same pattern in those variables between clusters 1 to 6. 
 
 # <span style="color: mediumslateblue;">Discussion and Conclusion</span>
 
@@ -162,6 +158,8 @@ One of the main issues we encountered with every multiple regression model were 
 What our model struggles to predict are these super-hit classic films that have so much influence within the world of entertainment. However, this model may give us an idea of IMDB score for average, run-of-the-mill films, based on factors such as budget, number of votes, and runtime. This suggests there are other layers to the art of film-making not quantified in this data set. For instance, other movie metrics such as script quality, actor performance, cinematography, and/or novelty plays a significant role, but these were not captured in the data set that we used 
 
 Our findings suggest these underrepresented qualities are important to the public's perception of films, but needless to say, they may be difficult measures to capture. Perhaps this is why they call it "movie magic!" 
+
+**Hierarchical Clustering:** 
 
 # <span style="color: mediumslateblue;">References</span>
 [WE NEED TO CITE CRAN]
