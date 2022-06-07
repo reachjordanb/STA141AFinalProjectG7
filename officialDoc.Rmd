@@ -190,7 +190,7 @@ email: rfsiddique@ucdavis.edu
 
 email: cwidel@ucdavis.edu
 
-**Tracy Yu:** Tracy contributed in the editing of the final document. She collaborated to produce a final draft for section \@ref(mr) and the "multiple regression" portion of Section \@ref(dc)
+**Tracy Yu:** Tracy contributed in assisting in the creation of the Introduction and in the editing of the final document. She collaborated to produce a final draft for section \@ref(mr) and the "multiple regression" portion of Section \@ref(dc)
 
 email: trayu@ucdavis.edu
 
