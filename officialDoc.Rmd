@@ -182,7 +182,7 @@ email: rtadams@ucdavis.edu
 
 email: jorbowman@ucdavis.edu
 
-**Ruqayyah Siddique:**
+**Ruqayyah Siddique:** Ruqayyah was the main collaborator on creating the website to view the analysis report. She contributed to the write-up of Section \@ref(ca) and interpreting the dendrograms, as well as the tables produced from the `means_by_cluster()` function). She also collaborated on producing a conclusion for the "hierarchial clustering" portion of Section \@ref(dc).
 
 email: rfsiddique@ucdavis.edu
 
