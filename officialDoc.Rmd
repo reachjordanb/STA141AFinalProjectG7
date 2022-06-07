@@ -172,7 +172,7 @@ In the Full Hierarchical Clustering model, after returning the list of movies in
 
 <div id="refs"></div>
 
-# Authors and Contributions
+# <span style="color: mediumslateblue;">Authors and Contributions</span>
 
 **Riley Adams:** Riley was a main collaborator in the overall planning and conceptual direction of the study. He contributed to data exploration, and data cleaning, including collaborating on the code written. He produced figures \@ref(fig:histBudget) , \@ref(fig:bothBox), \@ref(fig:scoreVotesCorr) , and \@ref(fig:residualsPlots) . He also took the lead on implementation of the Section \@ref(mr), writing all the code involved. He also was the main contributor for the write up of Section \@ref(mr) as well as the "multiple regression" portion of Section \@ref(dc) and "Responding to comment #1" in Section \@ref(dv) . He also implemented the formatting and production of the final document through the "bookdown" library in the R programming language, and creation Section \@ref(bib). 
 
