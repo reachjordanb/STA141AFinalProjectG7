@@ -178,7 +178,7 @@ In the Full Hierarchical Clustering model, after returning the list of movies in
 
 email: rtadams@ucdavis.edu
 
-**Jordan Bowman:** Jordan was a main collaborator in the overall planning and conceptual direction of the study. He contributed to data cleaning, and data exploration, including collaborating on the code written. He produced figures \@ref(fig:scoreVotesCorr) and \@ref(fig:dendPlots) and took the lead on implementation of Section  \@ref(ca), (writing all the code involved, including the `means_by_cluster()` function) and "Responding to comment #2" in Section \@ref(dv) .
+**Jordan Bowman:** Jordan was a main collaborator in the overall planning and conceptual direction of the study. He contributed to data cleaning, and data exploration, including collaborating on the code written. He produced figures \@ref(fig:scoreVotesCorr) and \@ref(fig:dendPlots) and took the lead on implementation of Section \@ref(ca), (writing all the code involved, including the `means_by_cluster()` function) and "Responding to comment #2" in Section \@ref(dv) . He also contributed to the write-up of of Section \@ref(ca).
 
 email: jorbowman@ucdavis.edu
 
