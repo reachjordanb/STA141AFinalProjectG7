@@ -186,7 +186,7 @@ email: jorbowman@ucdavis.edu
 
 email: rfsiddique@ucdavis.edu
 
-**Constanza Widel:**
+**Constanza Widel:** Constanza contributed in Cluster Analysis and interpreting the tables produced by the function. She also contributed to the Data Visualization section and Hierarchial Clustering section of the conclusion. 
 
 email: cwidel@ucdavis.edu
 
